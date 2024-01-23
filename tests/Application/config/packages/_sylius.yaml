@@ -1,0 +1,40 @@
+imports:
+    - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
+    - { resource: "@NextstoreSyliusParcelPlugin/Resources/config/services.xml" }
+    - {
+          resource: "@NextstoreSyliusParcelPlugin/Resources/config/app/config.yaml",
+      }
+
+parameters:
+    sylius_core.public_dir: "%kernel.project_dir%/public"
+
+sylius_shop:
+    product_grid:
+        include_all_descendants: true
+
+sylius_api:
+    enabled: true
+
+sylius_payment:
+    resources:
+        payment:
+            classes:
+                model: Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Payment\Payment
+
+sylius_order:
+    resources:
+        order_item:
+            classes:
+                model: Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Order\OrderItem
+
+sylius_product:
+    resources:
+        product:
+            classes:
+                model: Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Product\Product

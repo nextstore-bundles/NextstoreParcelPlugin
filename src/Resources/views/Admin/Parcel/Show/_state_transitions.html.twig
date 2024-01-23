@@ -1,0 +1,76 @@
+{% set state_new = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_NEW') %}
+{% set state_confirmed = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_CONFIRMED') %}
+{% set state_shipped_to_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_SHIPPED_TO_MONGOLIA') %}
+{% set state_arrived_in_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_ARRIVED_IN_MONGOLIA') %}
+{% set state_shipped_to_customer = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_SHIPPED_TO_CUSTOMER') %}
+{% set state_delivered = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_DELIVERED') %}
+
+{% if parcel.state == state_new %}
+    <form
+        name="parcel-confirm-{{ parcel.id }}"
+        method="post"
+        action="{{ path('nextstore_sylius_parcel_admin_parcel_confirm', {'id': parcel.id }) }}"
+    >
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token(parcel.id) }}">
+        <button type="submit" class="ui primary button">
+            <i class="icon check"></i>
+            {{ 'nextstore_sylius_parcel.ui.transition_confirm'|trans }}
+        </button>
+    </form>
+{% elseif parcel.state == state_confirmed %}
+    <form
+        name="parcel-ship-mongolia-{{ parcel.id }}"
+        method="post"
+        action="{{ path('nextstore_sylius_parcel_admin_parcel_ship_to_mongolia', {'id': parcel.id}) }}"
+    >
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token(parcel.id) }}">
+        <button class="ui olive button" type="submit">
+            <i class="icon plane"></i>
+            {{ 'nextstore_sylius_parcel.ui.transition_ship_to_mongolia'|trans }}
+        </button>
+    </form>
+{% elseif parcel.state == state_shipped_to_mongolia %}
+    <form
+        name="parcel-arrived-in-mongolia-{{ parcel.id }}"
+        method="post"
+        action="{{ path('nextstore_sylius_parcel_admin_parcel_arrived_in_mongolia', {'id': parcel.id }) }}"
+    >
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token(parcel.id) }}">
+        <button class="ui teal button" type="submit">
+            <i class="icon building"></i>
+            {{ 'nextstore_sylius_parcel.ui.transition_arrived_in_mongolia'|trans }}
+        </button>
+    </form>
+{% elseif parcel.state == state_arrived_in_mongolia %}
+    <form
+        name="parcel-ship-customer-{{ parcel.id }}"
+        method="post"
+        action="{{ path('nextstore_sylius_parcel_admin_parcel_ship_to_customer', {'id': parcel.id}) }}"
+    >
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token(parcel.id) }}">
+        <button class="ui blue button" type="submit">
+            <i class="icon shipping fast"></i>
+            {{ 'nextstore_sylius_parcel.ui.transition_ship_to_customer'|trans }}
+        </button>
+    </form>
+{% elseif parcel.state == state_shipped_to_customer %}
+    <form
+        name="parcel-deliver-{{ parcel.id }}"
+        method="post"
+        action="{{ path('nextstore_sylius_parcel_admin_parcel_deliver', {'id': parcel.id, 'csrf_token': parcel.id}) }}"
+
+    >
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token(parcel.id) }}">
+        <button class="ui green button" type="submit">
+            <i class="icon check circle"></i>
+            {{ 'nextstore_sylius_parcel.ui.transition_deliver'|trans }}
+        </button>
+    </form>
+{% elseif parcel.state == state_delivered %}
+    <button
+        disabled
+        class="ui grey button">
+        <i class="icon circle check"></i>
+        {{ 'nextstore_sylius_parcel.ui.delivered'|trans }}
+    </button>
+{% endif %}

@@ -1,0 +1,200 @@
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+{% set orderPromotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT') %}
+{% set unitPromotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT') %}
+{% set shippingAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::SHIPPING_ADJUSTMENT') %}
+{% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
+
+
+{% set variant = item.variant %}
+{% set product = variant.product %}
+
+{% set aggregatedUnitPromotionAdjustments = item.getAdjustmentsTotalRecursively(unitPromotionAdjustment) + item.getAdjustmentsTotalRecursively(orderPromotionAdjustment) %}
+{% set subtotal = (item.unitPrice * item.quantity) + aggregatedUnitPromotionAdjustments %}
+
+{% set taxIncluded = sylius_admin_order_unit_tax_included(item) %}
+{% set taxExcluded = sylius_admin_order_unit_tax_excluded(item) %}
+
+{# <tr class="modal-row" data-url="{{ path('nextstore_sylius_parcel_admin_ajax_order_item_by_id', {'itemId': item.id}) }}"> #}
+<tr>
+    <td rowspan="1" class="single line">
+        {% include '@SyliusAdmin/Product/_info.html.twig' %}
+        <br/>
+        <a target="_blank" href="{{item.webUrl}}">{{'nextstore_sylius_parcel.ui.web_url' | trans}}</a>
+    </td>
+    <td rowspan="1" class="right aligned unit-price">
+        {{ money.format(item.unitPrice, order.currencyCode) }}
+    </td>
+    <td rowspan="1" class="right aligned unit-discount">
+        {{ money.format(item.units.first.adjustmentsTotal(unitPromotionAdjustment), order.currencyCode) }}
+    </td>
+    <td rowspan="2" class="right aligned unit-order-discount">
+        <span style="font-style: italic;">~ {{ money.format(item.units.first.adjustmentsTotal(orderPromotionAdjustment), order.currencyCode) }}</span>
+    </td>
+    <td rowspan="2" class="right aligned discounted-unit-price">
+        {{ money.format(item.fullDiscountedUnitPrice, order.currencyCode) }}
+    </td>
+    <td rowspan="2" class="right aligned quantity">
+        {{ item.quantity }}
+    </td>
+    <td rowspan="2" class="right aligned subtotal">
+        {{ money.format(subtotal, order.currencyCode) }}
+    </td>
+    <td rowspan="2" class="right aligned tax">
+        <div class="tax-excluded">{{ money.format(taxExcluded, order.currencyCode) }}</div>
+        <div class="tax-disabled">
+            <div class=s"tax-included"> {{ money.format(taxIncluded, order.currencyCode) }}
+            </div>
+            <small>({{ 'sylius.ui.included_in_price'|trans }})</small>
+        </div>
+    </td>
+    <td rowspan="2" class="right aligned total">
+        {{ money.format(item.total, order.currencyCode) }}
+    </td>
+    {% include '@NextstoreSyliusParcelPlugin/Admin/Order/Show/Summary/_state_transitions.html.twig' with {row: 2, edit:true}  %}
+</tr>
+<tr>
+    <td colspan="3">
+        <div style="display: flex; justify-content: space-between; width: 100%">
+            <strong class="ui label">{{ 'nextstore_sylius_parcel.ui.tracking_code'|trans }}: </strong>
+            <strong class="right aligned" style="width: 100%">{{ item.trackingCode }}</strong>
+        </div>
+    </td>
+</tr>
+
+{# Item edit modal #}
+<div class="ui modal" id="item-edit-modal-{{item.id}}" style="width: 500px !important;">
+    <i class="close icon"></i>
+    <div class="header">
+        {{'sylius.ui.edit' | trans }} #{{item.id}} : {{item.productName}}
+    </div>
+    <div class="image content" style="padding-bottom: 0 !important;">
+        <a href="{{path('sylius_admin_product_show', {'id': product.id})}}">
+            {% include '@SyliusAdmin/Product/_info.html.twig' %}
+        </a>
+    </div>
+    <div class="content">
+        <form
+            class="ui form"
+            action="{{path('nextstore_sylius_parcel_admin_order_item_edit', {'id': item.id})}}"
+            method="post"
+            id="order_item_form_{{item.id}}"
+        >
+            <div class="field">
+                <label>{{'nextstore_sylius_parcel.ui.tracking_code' | trans}}</label>
+                <div class="ui right input"
+                     style="width: 100% !important"
+                >
+                    <input
+                        type="text"
+                        name="trackingCode"
+                        placeholder="{{'nextstore_sylius_parcel.ui.tracking_code' | trans}}"
+                        value="{{item.trackingCode }}"
+                    >
+                </div>
+
+            </div>
+            <div class="field" style="margin-top: 15px">
+                <label>{{'sylius.ui.unit_price' | trans}}</label>
+                <div class="ui right labeled input"
+                     style="width: 100% !important;"
+                >
+                    <input
+                        type="number"
+                        name="price"
+                        placeholder="{{'sylius.ui.unit_price' | trans}}"
+                        value="{{item.unitPrice / 100 }}"
+                    >
+                    <div class="ui basic label">
+                        {{order.currencyCode}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="field" style="margin-top: 15px;">
+                <label>{{'sylius.ui.quantity' | trans }}</label>
+                <div class="ui right input" style="width: 100% !important">
+                    <input
+                        type="number"
+                        name="quantity"
+                        placeholder="{{'sylius.ui.quantity' | trans }}"
+                        value="{{item.quantity}}"
+                    >
+                </div>
+            </div>
+            <div class="two field">
+                <div class="ui right labeled input" style="width: 100% !important; margin-top: 15px">
+                    {% set color = null %}
+                    {% if item.color %}
+                        {% set color = item.color %}
+                    {% endif %}
+                    <input
+                        type="text"
+                        name="color"
+                        placeholder="{{'sylius.ui.color' | trans }}"
+                        value="{{color}}"
+                    >
+                    <label class="ui basic label">{{'sylius.ui.color' | trans }}</label>
+                </div>
+                <div class="ui right labeled input" style="width: 100% !important; margin-top: 15px">
+                    {% set size = null %}
+                    {% if item.size %}
+                        {% set size = item.size %}
+                    {% endif %}
+                    <input
+                        type="text"
+                        name="size"
+                        placeholder="{{'nextstore_sylius_parcel.ui.size' | trans }}"
+                        value="{{size}}"
+                    >
+                    <label class="ui basic label" >{{'nextstore_sylius_parcel.ui.size' | trans }}</label>
+                </div>
+            </div>
+            <div class="field" style="margin-top: 20px;">
+                {% set description = null %}
+                {% if item.description %}
+                    {% set description = item.description %}
+                {% endif %}
+                <label>{{'sylius.ui.description'| trans}}</label>
+                <div class="ui input" style="width: 100% !important; font-size:16px">
+                    <input
+                        type="text"
+                        class="ui input"
+                        rows="2"
+                        name="description"
+                        value="{{description}}"
+                    >
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            {{'nextstore_sylius_parcel.ui.close' | trans}}
+        </div>
+        <div class="ui positive right labeled icon button" onclick="submitOrderItemEditForm({{item.id}})" id="order_item_submit_button_{{item.id}}">
+            {{'sylius.ui.save' | trans}}
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showOrderItemEditModal(itemId) {
+        $('#item-edit-modal-'+ itemId)
+            .modal('show')
+        ;
+    }
+    function submitOrderItemEditForm(itemId) {
+        const form = document.getElementById('order_item_form_' + itemId);
+        form.submit();
+    }
+</script>
+<style>
+    @media only screen and (min-width: 1200px){
+        #item-edit-modal-{{item.id}}{
+            width: 500px;
+        }
+    }
+</style>
+

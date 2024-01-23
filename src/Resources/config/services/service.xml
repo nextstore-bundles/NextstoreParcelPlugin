@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!-- src/Service/Parcel/ParcelService.php -->
+    <services>
+        <!-- Order Payment Resolver -->
+        <service id="sylius.state_resolver.order_payment"
+            class="Nextstore\SyliusParcelPlugin\Resolver\OrderPaymentResolver" public="true">
+            <argument type="service" id="sm.factory" />
+        </service>
+        <!---->
+        <service id="nextstore_sylius_parcel.service.aws_file_uploader"
+            class="Nextstore\SyliusParcelPlugin\Service\AwsFileUploader" public="true">
+            <argument type="service" id="parameter_bag" />
+        </service>
+        <service id="nextstore_sylius_parcel.validator.parcel"
+            class="Nextstore\SyliusParcelPlugin\Validator\ValidatorParcel" public="true">
+        </service>
+        <service id="nextstore_sylius_parcel.validator.file"
+            class="Nextstore\SyliusParcelPlugin\Validator\ValidatorFile" public="true">
+        </service>
+        <service id="nextstore_sylius_parcel.validator.order_item"
+            class="Nextstore\SyliusParcelPlugin\Validator\ValidatorOrderItem" public="true">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.service.parcel"
+            class="Nextstore\SyliusParcelPlugin\Service\ParcelService" public="true">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="sylius.context.currency" />
+            <argument type="service" id="nextstore_sylius_parcel.factory.parcel" />
+            <argument type="service" id="nextstore_sylius_parcel.factory.parcel_item" />
+            <argument type="service" id="sm.factory" />
+            <argument type="service" id="nextstore_sylius_parcel.service.aws_file_uploader" />
+            <argument type="service" id="parameter_bag" />
+            <argument type="service" id="nextstore_sylius_parcel.validator.parcel" />
+            <argument type="service" id="nextstore_sylius_parcel.validator.file" />
+            <argument type="service" id="sylius.payment_method_resolver.default" />
+            <argument type="service" id="sylius.context.channel" />
+            <argument type="service" id="nextstore_sylius_parcel.factory.payment" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.service.order_item"
+            class="Nextstore\SyliusParcelPlugin\Service\OrderItemService" public="true">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="nextstore_sylius_parcel.validator.order_item" />
+            <argument type="service" id="nextstore_sylius_parcel.validator.file" />
+            <argument type="service" id="parameter_bag" />
+            <argument type="service" id="sm.factory" />
+            <argument type="service" id="nextstore_sylius_parcel.service.aws_file_uploader" />
+            <argument type="service" id="nextstore_sylius_parcel.factory.product" />
+            <argument type="service" id="nextstore_sylius_parcel.factory.order_item" />
+        </service>
+    </services>
+</container>

@@ -1,0 +1,314 @@
+# Define your own admin routes here
+nextstore_sylius_parcel_admin_parcel:
+    resource: |
+        alias: nextstore_sylius_parcel.parcel
+        section: admin
+        templates: "@SyliusAdmin\\Crud"
+        redirect: update
+        grid: nextstore_sylius_parcel_parcel
+        vars:
+            all:
+                subheader: nextstore_sylius_parcel.parcel.subheader
+            index:
+                icon: 'box'
+    type: sylius.resource
+    prefix: /admin
+
+nextstore_sylius_parcel_admin_order_items_show_for_parcel:
+    path: /admin/parcels-order-items
+    methods: [GET]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.show_order_items_list_action
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_parcel_pack:
+    path: /admin/parcels/pack
+    methods: [POST]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.pack_parcel_action
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_parcel_edit:
+    path: /admin/parcels/{id}/edit
+    methods: [POST]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.edit_parcel_action
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_parcel_item_edit:
+    path: /admin/parcels/{parcelId}/items/{itemId}/edit
+    methods: [POST]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.edit_parcel_item_action
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_parcel_add_to_pack:
+    path: /admin/parcels/{id}/add-to-pack
+    methods: [POST]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.add_items_to_parcel_action
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_export_parcel_to_excel:
+    path: /admin/manage-parcel-items/download-excel
+    methods: ["GET"]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.parcel_item::downloadExcel
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_parcel_detail:
+    path: /admin/parcels/{id}/detail
+    methods: [GET]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.show_parcel_detail_action
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_export_order_items_to_excel:
+    path: /admin/manage-orders-items/download-excel
+    methods: ["GET"]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.order_item::downloadExcel
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_manage_order_items:
+    path: /admin/manage-orders-items
+    methods: ["GET"]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.order_item::getList
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_update_order_item_state_from_excel:
+    path: /admin/manage-orders-items/update-state-from-excel
+    methods: ["POST"]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.order_item::updateStateFromExcel
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_manage_parcel_items:
+    path: /admin/manage-parcel-items
+    methods: ["GET"]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.parcel_item::getList
+        _sylius:
+            permission: true
+
+alphlabs_sylius_parcel_admin_update_parcel_state_from_excel:
+    path: /admin/manage-parcel-items/update-state-from-excel
+    methods: ["POST"]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.parcel_item::updateStateFromExcel
+        _sylius:
+            permission: true
+
+nextstore_sylius_parcel_admin_order_item_edit:
+    path: /admin/orders/item/{id}/edit
+    methods: [POST]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.edit_order_item_action
+        _sylius:
+            permission: true
+
+#STATE TRANSITIONS
+nextstore_sylius_parcel_admin_parcel_payment_complete:
+    path: /admin/parcels/payments/{id}/complete
+    methods: [PUT]
+    defaults:
+        _controller: sylius.controller.payment::applyStateMachineTransitionAction
+        _sylius:
+            event: parcel_complete
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: sylius_payment
+                transition: parcel_complete
+            redirect: referer
+
+nextstore_sylius_parcel_admin_parcel_payment_refund:
+    path: /admin/parcels/payments/{id}/refund
+    methods: [PUT]
+    defaults:
+        _controller: sylius.controller.payment::applyStateMachineTransitionAction
+        _sylius:
+            event: parcel_refund
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: sylius_payment
+                transition: parcel_refund
+            redirect: referer
+
+nextstore_sylius_parcel_admin_parcel_confirm:
+    path: /admin/parcels/{id}/confirm
+    methods: [POST]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.parcel::applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: nextstore_parcel
+                transition: confirm
+            redirect: referer
+
+nextstore_sylius_parcel_admin_parcel_ship_to_mongolia:
+    path: /admin/parcels/{id}/ship-to-mongolia
+    methods: [POST]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.parcel::applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: nextstore_parcel
+                transition: ship_to_mongolia
+            redirect: referer
+
+nextstore_sylius_parcel_admin_parcel_arrived_in_mongolia:
+    path: /admin/parcels/{id}/arrived-in-mongolia
+    methods: [POST]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.parcel::applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: nextstore_parcel
+                transition: arrived_in_mongolia
+            redirect: referer
+
+nextstore_sylius_parcel_admin_parcel_ship_to_customer:
+    path: /admin/parcels/{id}/ship_to_customer
+    methods: [POST]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.parcel::applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: nextstore_parcel
+                transition: ship_to_customer
+            redirect: referer
+
+nextstore_sylius_parcel_admin_parcel_deliver:
+    path: /admin/parcels/{id}/deliver
+    methods: [POST]
+    defaults:
+        _controller: nextstore_sylius_parcel.controller.parcel::applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: nextstore_parcel
+                transition: deliver
+            redirect: referer
+
+nextstore_sylius_parcel_admin_order_item_confirm:
+    path: /admin/orders/item/{id}/confirm
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.order_item::applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: sylius_order_item
+                transition: confirm
+            redirect: referer
+
+nextstore_sylius_parcel_admin_order_item_purchase:
+    path: /admin/orders/item/{id}/purchase
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.order_item::applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: sylius_order_item
+                transition: purchase
+            redirect: referer
+
+nextstore_sylius_parcel_admin_order_item_cancel:
+    path: /admin/orders/item/{id}/cancel
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.order_item::applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: sylius_order_item
+                transition: cancel
+            redirect: referer
+
+nextstore_sylius_parcel_admin_order_item_foreign_delivery:
+    path: /admin/orders/item/{id}/foreign-delivery
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.order_item::applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: sylius_order_item
+                transition: foreign_delivery
+            redirect: referer
+
+nextstore_sylius_parcel_admin_order_item_restore:
+    path: /admin/orders/item/{id}/restore
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.order_item::applyStateMachineTransitionAction
+        _sylius:
+            permission: true
+            repository:
+                method: find
+                arguments:
+                    id: $id
+            state_machine:
+                graph: sylius_order_item
+                transition: restore
+            redirect: referer

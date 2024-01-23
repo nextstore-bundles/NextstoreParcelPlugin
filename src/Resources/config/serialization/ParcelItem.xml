@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+>
+    <class name="Nextstore\SyliusParcelPlugin\Entity\Parcel\ParcelItem">
+        <attribute name="id">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="trackingCode">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="width">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="height">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="length">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="weight">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="weight">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="total">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="createdAt">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+
+        <attribute name="orderItem">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+    </class>
+</serializer>

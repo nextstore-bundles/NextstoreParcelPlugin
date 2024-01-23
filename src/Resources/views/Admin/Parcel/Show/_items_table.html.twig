@@ -1,0 +1,115 @@
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+<table class="ui celled compact small table order-summary-table">
+    <thead>
+    <tr>
+        <th colspan="4" class="center aligned">{{ 'nextstore_sylius_parcel.ui.order_item'|trans }}</th>
+        <th colspan="6" class="center aligned">{{ 'nextstore_sylius_parcel.ui.parcel_item'|trans }}</th>
+    </tr>
+    <tr>
+        <th class="five wide sylius-table-column-item">{{ 'sylius.ui.order_item_product'|trans }}</th>
+        <th class="center aligned sylius-table-column-unit_price">{{ 'sylius.ui.unit_price'|trans }}</th>
+        <th class="center aligned sylius-table-column-quantity">{{ 'sylius.ui.quantity'|trans }}</th>
+        <th class="center aligned sylius-table-column-total">{{ 'sylius.ui.total'|trans }}</th>
+        <th class="center aligned">{{ 'sylius.ui.width' |trans }}</th>
+        <th class="center aligned">{{ 'nextstore_sylius_parcel.ui.length' |trans }}</th>
+        <th class="center aligned">{{ 'sylius.ui.height' |trans }}</th>
+        <th class="center aligned">{{ 'sylius.ui.weight' |trans }}</th>
+        <th class="center aligned sylius-table-column-total">{{ 'nextstore_sylius_parcel.ui.parcel_item_total'|trans }}</th>
+        <th class="center aligned">{{ 'sylius.ui.actions'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for p_item in parcel.items %}
+        <tr style="height: 50px !important;">
+            {% set item = p_item.orderItem %}
+            <td rowspan="2" class="single line">
+                {% set product = item.variant.product %}
+                {% set variant = item.variant %}
+                {% include '@SyliusAdmin/Product/_info.html.twig' %}
+                <a href="{{ path('sylius_admin_order_show', {'id': item.order.id}) }}" style="display: block">
+                    <i class="linkify icon"></i>
+                    {{ 'nextstore_sylius_parcel.ui.see_order' |trans }}
+                </a>
+            </td>
+            <td rowspan="2" class="right aligned unit-price">
+                {{ money.format(item.unitPrice, parcel.currencyCode) }}
+            </td>
+            <td rowspan="2"
+                class="right aligned quantity">
+                {{ item.quantity }}
+            </td>
+            <td rowspan="2"
+                class="right aligned total">
+                {{ money.format(item.total, parcel.currencyCode) }}
+            </td>
+            <td rowspan="1"
+                class="center aligned">
+                {{ p_item.width }} cm
+            </td>
+            <td rowspan="1"
+                class="center aligned"
+            >
+                {{ p_item.length }} cm
+            </td>
+            <td rowspan="1"
+                class="center aligned">
+                {{ p_item.height }} cm
+            </td>
+            <td rowspan="1"
+                class="center aligned">
+                {{ p_item.weight }} kg
+            </td>
+            <td rowspan="1"
+                style="height: 20px !important;"
+                class="center aligned">
+                {{ money.format(p_item.total, parcel.currencyCode) }}
+            </td>
+            <td rowspan="1" class="center aligned">
+                <button
+                    onclick="$('#parcel-item-edit-modal-{{ p_item.id }}').modal('show');"
+                    class="ui button">
+                    <i class="icon edit"></i>
+                    {{ 'sylius.ui.edit' | trans }}
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td
+                class="center aligned"
+                style="border-left: 1px solid rgba(34, 36, 38, 0.15) !important; padding: 0 !important;"
+                colspan="6"
+                rowspan="1"
+            >
+                <div style="display: flex; justify-content: space-between; width: 100%; padding: 0 10px">
+                    <span class="ui label">{{ 'nextstore_sylius_parcel.ui.tracking_code'|trans }}</span>
+                    <strong>{{ p_item.trackingCode }}</strong>
+                </div>
+            </td>
+        </tr>
+{#  ----------------------------  Modal Parcel Item ---------------------------- #}
+        {% include '@NextstoreSyliusParcelPlugin/Admin/Parcel/Show/Modal/_parcel_item_edit_modal.html.twig' %}
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr></tr>
+    <tr>
+        <th colspan="4"></th>
+        <th colspan="3" id="tax-total" class="right aligned">
+            <strong>{{ 'sylius.ui.quantity'|trans }}</strong>:
+            {{ parcel.quantity }}
+        </th>
+        <th colspan="3" id="items-total" class="right aligned">
+            <strong>{{ 'sylius.ui.items_total'|trans }}</strong>:
+            {{ money.format(parcel.itemsTotal, parcel.currencyCode) }}
+        </th>
+    </tr>
+    <tr>
+        <td colspan="10" id="total" class="ui large header right aligned">
+            <strong>{{ 'nextstore_sylius_parcel.ui.parcel_total'|trans }}</strong>:
+            {{ money.format(parcel.total, parcel.currencyCode) }}
+        </td>
+    </tr>
+    </tfoot>
+</table>
+

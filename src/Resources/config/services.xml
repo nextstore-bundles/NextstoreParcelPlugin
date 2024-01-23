@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="services/menu.xml" />
+        <import resource="services/factory.xml" />
+        <import resource="services/service.xml" />
+        <import resource="services/controller.xml" />
+        <import resource="services/doctrine_extension.xml" />
+    </imports>
+
+    <parameters>
+        <parameter key="nextstore.path.admin_excel">file/excel/</parameter>
+        <parameter
+            key="aws.s3.key">%env(AWS_S3_KEY)%</parameter>
+        <parameter key="aws.s3.secret">%env(AWS_S3_SECRET)%</parameter>
+        <parameter
+            key="aws.s3.bucket">%env(AWS_S3_BUCKET)%</parameter>
+        <parameter key="aws.s3.version">%env(AWS_S3_VERSION)%</parameter>
+        <parameter
+            key="aws.s3.region">%env(AWS_S3_REGION)%</parameter>
+        <parameter
+            key="aws.s3.path">%env(AWS_S3_PATH)%</parameter>
+    </parameters>
+</container>

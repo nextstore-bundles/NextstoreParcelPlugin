@@ -1,0 +1,82 @@
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+<div class="ui modal" id="other-items-modal-{{ parcel.id }}" style="width: 1000px !important;">
+    <i class="close icon"></i>
+    <div class="header">
+        {{ 'nextstore_sylius_parcel.ui.other_order_items'|trans }}
+    </div>
+    <table
+        class="ui celled compact small table order-summary-table"
+        style="
+            margin: 0 !important;
+            border-radius: 0 !important;
+            border-top: none !important;
+            border-bottom: none !important;"
+    >
+        <form
+            id="add-to-pack-form-{{ parcel.id }}"
+            name="add-to-pack-form-{{ parcel.id }}"
+            action="{{path('nextstore_sylius_parcel_admin_parcel_add_to_pack', {'id': parcel.id})}}"
+            method="post"
+        >
+            <thead class="full-width">
+                <tr>
+                    <th style="width:100px"></th>
+                    <th>{{'sylius.ui.product'|trans}}</th>
+                    <th>{{'sylius.ui.unit_price'|trans}}</th>
+                    <th>{{'sylius.ui.quantity'|trans}}</th>
+                    <th>{{'sylius.ui.total'|trans}}</th>
+                    <th>{{'sylius.ui.state' |trans}}</th>
+                </tr>
+            </thead>
+            <tbody style="border-bottom: none !important;">
+            {% for item in otherItems %}
+                <input id="customer-{{item.id}}" type="hidden" name="customerId" value="{{item.order.customer.id}}">
+                <tr>
+                    <td rowspan="2" class="collapsing">
+                        <div class="ui fitted slider checkbox">
+                            <input id="checkbox-{{item.id}}" name="itemIds[]" value="{{item.id}}" type="checkbox">
+                            <label></label>
+                        </div>
+                    </td>
+                    <td rowspan="1">
+                        {% set product = item.variant.product %}
+                        {% set variant = item.variant %}
+                        {% include '@SyliusAdmin/Product/_info.html.twig' %}
+                    </td>
+                    <td rowspan="1">{{ money.format(item.unitPrice, parcel.currencyCode) }}</td>
+                    <td rowspan="1">{{item.quantity}}</td>
+                    <td rowspan="2">{{ money.format(item.total, parcel.currencyCode) }}</td>
+                    <td rowspan="2">
+                        <span class="ui green label">
+                            {{item.state}}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td
+                        class="center aligned"
+                        style="height:30px; border-left: 1px solid rgba(34, 36, 38, 0.15) !important; padding: 0 !important;"
+                        colspan="3"
+                    >
+                        <strong>{{ item.trackingCode }}</strong>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </form>
+    </table>
+    <div class="actions">
+        <div class="ui black deny button">
+            {{ 'sylius.ui.cancel'|trans }}
+        </div>
+        <button
+            type="button"
+            onclick="document.getElementById('add-to-pack-form-{{ parcel.id }}').submit()"
+            class="ui positive right labeled icon button">
+            {{ 'nextstore_sylius_parcel.ui.transition_confirm'|trans }}
+            <i class="checkmark icon"></i>
+        </button>
+    </div>
+</div>
+

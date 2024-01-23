@@ -1,0 +1,125 @@
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+<div class="ui modal" id="parcel-edit-modal-{{ parcel.id }}" style="width: 500px !important;">
+    <i class="close icon"></i>
+    <div class="header">
+        {{ 'sylius.ui.edit'|trans }}: {{ 'nextstore_sylius_parcel.ui.parcel'|trans }} #{{ parcel.id }}
+    </div>
+    <div class="content">
+        <form
+            class="ui form"
+            name="parcel-edit-form-{{ parcel.id }}"
+            id="parcel-edit-form-{{ parcel.id }}"
+            method="post"
+            action="{{ path('nextstore_sylius_parcel_admin_parcel_edit', {'id': parcel.id}) }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token(parcel.id) }}">
+            <div class="field">
+                <label>{{'sylius.ui.code' | trans}}</label>
+                <div class="ui right input"
+                     style="width: 100% !important"
+                >
+                    <input
+                        type="text"
+                        name="code"
+                        placeholder="{{'sylius.ui.code' | trans}}"
+                        value="{{parcel.code}}"
+                    >
+                </div>
+            </div>
+
+            <div class="two fields" style="margin-top: 20px;">
+                <div class="field" style="width: 50% !important; margin-top: 15px">
+                    <div class="ui right labeled input" style="width: 100% !important">
+                        <input
+                            type="number"
+                            name="width"
+                            placeholder="{{'sylius.ui.width' | trans }}"
+                            value="{{parcel.width}}"
+                        >
+                        <label class="ui basic label">{{'sylius.ui.width' | trans }} /Cm</label>
+                    </div>
+                </div>
+                <div class="field" style="width: 50% !important; margin-top: 15px">
+                    <div class="ui right labeled input" style="width: 100% !important">
+                        <input
+                            type="number"
+                            name="height"
+                            placeholder="{{'sylius.ui.height' | trans }}"
+                            value="{{parcel.height}}"
+                        >
+                        <label class="ui basic label">{{'sylius.ui.height' | trans }} /Cm</label>
+                    </div>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field" style="width: 50% !important; margin-top: 15px">
+                    <div class="ui right labeled input" style="width: 100% !important">
+                        <input
+                            type="number"
+                            name="length"
+                            placeholder="{{'nextstore_sylius_parcel.ui.length' | trans }}"
+                            value="{{parcel.length}}"
+                        >
+                        <label class="ui basic label">{{'nextstore_sylius_parcel.ui.length' | trans }} /Cm</label>
+                    </div>
+                </div>
+                <div class="field" style="width: 50% !important; margin-top: 15px">
+                    <div class="ui right labeled input" style="width: 100% !important">
+                        <input
+                            type="number"
+                            name="weight"
+                            placeholder="{{'sylius.ui.weight' | trans }}"
+                            value="{{parcel.weight}}"
+                        >
+                        <label class="ui basic label">{{'sylius.ui.weight' | trans }} /Kg</label>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>{{'nextstore_sylius_parcel.ui.parcel_total' | trans}}</label>
+                <div class="ui right labeled input"
+                     style="width: 100% !important"
+                >
+                    <input
+                        type="text"
+                        name="total"
+                        placeholder="{{'nextstore_sylius_parcel.ui.parcel_total' | trans}}"
+                        value="{{ parcel.total / 100 }}"
+                    >
+                    <label class="ui basic label">{{  parcel.currencyCode }}</label>
+                </div>
+            </div>
+            <div class="field" style="margin-top: 20px;">
+                {% set notes = null %}
+                {% if parcel.notes %}
+                    {% set notes = parcel.notes %}
+                {% endif %}
+                <label>{{'sylius.ui.notes'| trans}}</label>
+                <div class="ui input" style="width: 100% !important; font-size:16px">
+                    <input
+                        type="text"
+                        class="ui input"
+                        rows="2"
+                        name="notes"
+                        value="{{notes}}"
+                    >
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            {{ 'sylius.ui.cancel'|trans }}
+        </div>
+        <button type="button" class="ui positive right labeled icon button" onclick="submitParcelEditForm()">
+            {{ 'sylius.ui.save'|trans }}
+            <i class="checkmark icon"></i>
+        </button>
+    </div>
+</div>
+<script>
+    function submitParcelEditForm() {
+        const form = document.getElementById('parcel-edit-form-{{ parcel.id }}');
+        form.submit();
+    }
+</script>

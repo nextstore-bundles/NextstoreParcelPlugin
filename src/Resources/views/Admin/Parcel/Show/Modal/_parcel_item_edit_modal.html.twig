@@ -1,0 +1,105 @@
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+<div class="ui modal" id="parcel-item-edit-modal-{{ p_item.id }}" style="width: 600px !important;">
+    <i class="close icon"></i>
+    <div class="header">
+        {{ 'sylius.ui.edit'|trans }}: {{ 'nextstore_sylius_parcel.ui.parcel_item'|trans }} #{{ p_item.id }}
+    </div>
+    <div class="content">
+        <form
+            name="parcel-item-edit-form-{{ p_item.id }}"
+            id="parcel-item-edit-form-{{ p_item.id }}"
+            class="ui mini form"
+            method="post"
+            action="{{ path('nextstore_sylius_parcel_admin_parcel_item_edit', {'parcelId' : parcel.id, 'itemId': p_item.id}) }}"
+        >
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token(p_item.id) }}">
+            <div class="inline fields" style="display: flex">
+                <div class="six wide field" style="margin-top: 15px">
+                    <div class="ui right labeled input" style="width: 100% !important">
+                        <input
+                            type="number"
+                            name="width"
+                            placeholder="{{'sylius.ui.width' | trans }}"
+                            value="{{p_item.width}}"
+                        >
+                        <label class="ui basic label">{{'sylius.ui.width' | trans }} /Cm</label>
+                    </div>
+                </div>
+                <div class="six wide field" style="margin-top: 15px">
+                    <div class="ui right labeled input">
+                        <input
+                            type="number"
+                            name="height"
+                            placeholder="{{'sylius.ui.height' | trans }}"
+                            value="{{p_item.height}}"
+                        >
+                        <label class="ui basic label">{{'sylius.ui.height' | trans }} /Cm</label>
+                    </div>
+                </div>
+            </div>
+            <div class="two inline fields" style="display: flex;">
+                <div class="six wide field" style="margin-top: 20px">
+                    <div class="ui right labeled input"  style="width: 100% !important">
+                        <input
+                            type="number"
+                            name="length"
+                            placeholder="{{'nextstore_sylius_parcel.ui.length' | trans }}"
+                            value="{{p_item.length}}"
+                        >
+                        <label class="ui basic label">{{'nextstore_sylius_parcel.ui.length' | trans }} /Cm</label>
+                    </div>
+                </div>
+                <div class="six wide field" style="margin-top: 20px">
+                    <div class="ui right labeled input" style="width: 100% !important">
+                        <input
+                            type="number"
+                            name="weight"
+                            placeholder="{{'sylius.ui.weight' | trans }}"
+                            value="{{p_item.weight}}"
+                        >
+                        <label class="ui basic label">{{'sylius.ui.weight' | trans }} /Kg</label>
+                    </div>
+                </div>
+            </div>
+            <div class="field" style="margin-top: 15px">
+                <label>{{'nextstore_sylius_parcel.ui.parcel_item_total' | trans}}</label>
+                <div class="ui right labeled input"
+                     style="width: 100% !important"
+                >
+                    <input
+                        type="text"
+                        name="total"
+                        placeholder="{{'nextstore_sylius_parcel.ui.parcel_total' | trans}}"
+                        value="{{ p_item.total / 100 }}"
+                    >
+                    <label class="ui basic label">{{ parcel.currencyCode }}</label>
+                </div>
+            </div>
+            <div class="field" style="margin-top: 20px;">
+                <label>{{'nextstore_sylius_parcel.ui.tracking_code'| trans}}</label>
+                <div class="ui input" style="width: 100% !important; font-size:16px">
+                    <input
+                        type="text"
+                        class="ui input"
+                        name="trackingCode"
+                        value="{{p_item.trackingCode}}"
+                    >
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            {{ 'sylius.ui.cancel'|trans }}
+        </div>
+        <button
+            type="button"
+            id="parcel_item_submit_button_{{ p_item.id }}"
+            onclick="document.getElementById('parcel-item-edit-form-{{ p_item.id }}').submit()"
+            class="ui positive right labeled icon button">
+            {{ 'sylius.ui.save'|trans }}
+            <i class="checkmark icon"></i>
+        </button>
+    </div>
+</div>

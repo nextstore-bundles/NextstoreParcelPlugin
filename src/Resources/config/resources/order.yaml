@@ -1,0 +1,5 @@
+sylius_order:
+    resources:
+        order_item:
+            classes:
+                repository: Nextstore\SyliusParcelPlugin\Doctrine\ORM\Repository\OrderItemRepository

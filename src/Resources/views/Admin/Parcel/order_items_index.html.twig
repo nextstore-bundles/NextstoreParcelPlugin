@@ -1,0 +1,154 @@
+{% extends '@!SyliusAdmin/layout.html.twig' %}
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+{% block content %}
+    <div class="ui stackable two column grid">
+        <div class="column">
+            <div class="ui header">
+                <i class="circular boxes icon"></i>
+                <div class="content">
+                    {{ 'nextstore_sylius_parcel.ui.pack'|trans }}
+                    <div class="sub header">{{ 'nextstore_sylius_parcel.ui.pack_order_items'|trans }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui stackable four column grid">
+        <div class="column">
+            <label>{{ 'sylius.ui.total'|trans }}:</label>
+            <strong>{{ items.nbResults }}</strong>
+        </div>
+    </div>
+    <div class="ui hidden divider"></div>
+    <div class="ui styled fluid accordion">
+		<div class="title">
+			<i class="dropdown icon"></i>
+			<i class="filter icon"></i>
+			{{ 'sylius.ui.filters' |trans }}
+		</div>
+		<div class="content">
+			{{ form_start(form, {'action': path('nextstore_sylius_parcel_admin_order_items_show_for_parcel'), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+            <div class="sylius-filters">
+                <div class="sylius-filters__field">
+                    <div class="field">
+                        {{ form_row(form.phone) }}
+                    </div>
+                </div>
+                <div class="sylius-filters__field">
+                    <div class="sylius-filters__group">
+                        <div class="field">
+                            {{ form_row(form.startDate) }}
+                        </div>
+                        <div class="field">
+                            {{ form_row(form.endDate) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="sylius-filters__field">
+                    <div class="field">
+                        {{ form_row(form.orderNumber) }}
+                    </div>
+                </div>
+                <div class="sylius-filters__field">
+
+                    <div class="field">
+                        {{ form_row(form.orderBy) }}
+                    </div>
+                </div>
+            </div>
+            <button class="ui blue labeled icon button" type="submit">
+                <i class="icon search"></i>
+                {{ 'sylius.ui.filter' |trans }}
+            </button>
+			<a class="ui labeled icon button" href="{{ path('nextstore_sylius_parcel_admin_order_items_show_for_parcel') }}">
+				<i class="icon remove"></i>
+				{{ 'sylius.ui.clear_filters' | trans }}
+			</a>
+
+			{{ form_row(form._token) }}
+			{{ form_end(form, {'render_rest': false}) }}
+		</div>
+	</div>
+
+	{% for key, values in items %}
+    <div class="ui segment" style="overflow-x: auto;  padding: 2px !important">
+		<table class="ui celled compact small table order-summary-table" style="min-width: 1400px">
+			<thead class="full-width">
+				<tr>
+					<th style="width:100px">{{ key }}</th>
+					<th>{{'sylius.ui.product'|trans}}</th>
+                    <th>{{ 'nextstore_sylius_parcel.ui.order_number'|trans }}</th>
+                    <th>{{ 'nextstore_sylius_parcel.ui.tracking_code'|trans }}</th>
+					<th>{{'sylius.ui.unit_price'|trans}}</th>
+					<th>{{'sylius.ui.quantity'|trans}}</th>
+					<th>{{'sylius.ui.total'|trans}}</th>
+					<th>{{'sylius.ui.state' |trans}}</th>
+                    <th>{{ 'sylius.ui.date'|trans }}</th>
+				</tr>
+			</thead>
+			<tbody>
+            <form
+                id="pack-form-{{key}}"
+                name="pack-form-{{ key }}"
+                action="{{path('nextstore_sylius_parcel_admin_parcel_pack')}}"
+                method="post"
+            >
+                {% for item in values %}
+                    <input id="customer-{{ item.id }}" type="hidden" name="customerId" value="{{item.customerId}}">
+                    <input id="address-{{ item.id }}" type="hidden" name="addressId" value="{{ item.addressId }}">
+                    <tr id="{{ item.id }}">
+                        <td class="collapsing">
+                            <div class="ui fitted slider checkbox">
+                                <input id="{{item.id}}" name="itemIds[]" value="{{item.id}}" type="checkbox">
+                                <label></label>
+                            </div>
+                        </td>
+                        <td>
+                            <h4 class="ui image header">
+                                <img src="{{ cdn_url }}/uploads/{{item.imageType}}/{{item.imagePath}}" class="ui mini rounded image">
+                                <div class="content">
+                                    {{item.productName}}
+                                    <div class="sub header">{{item.productCode}}
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            <a href="{{ path('sylius_admin_order_show', {id: item.orderId}) }}">
+                                #{{ item.orderNumber }}
+                            </a>
+                        </td>
+                        <td>{{ item.trackingCode }}</td>
+                        <td>{{ money.format(item.unitPrice, item.currencyCode) }}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{ money.format(item.total, item.currencyCode) }}</td>
+                        <td>
+                            <span class="ui green label">
+                                {{item.state}}
+                            </span>
+                        </td>
+                        <td>{{ item.date }}</td>
+                    </tr>
+                {% endfor %}
+            </form>
+			</tbody>
+			<tfoot class="full-width">
+				<tr>
+					<th></th>
+					<th colspan="8">
+						<button
+                            type="button"
+                            id="pack-form-submit-{{key}}"
+                            onclick="document.getElementById('pack-form-{{key}}').submit()"
+                            class="ui right floated small primary labeled icon button">
+							<i class="user icon"></i>
+							{{'nextstore_sylius_parcel.ui.pack'|trans}}
+						</button>
+					</th>
+				</tr>
+			</tfoot>
+		</table>
+    </div>
+	{% endfor %}
+    {{ pagerfanta(items) }}
+{% endblock %}

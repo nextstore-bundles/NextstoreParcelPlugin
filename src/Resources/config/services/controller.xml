@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!-- src/Service/Parcel/ParcelService.php -->
+    <services>
+        <service id="nextstore_sylius_parcel.controller.parcel_item"
+            class="Nextstore\SyliusParcelPlugin\Controller\Admin\ParcelItemController"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="twig" />
+            <argument type="service" id="nextstore_sylius_parcel.service.parcel" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.controller.order_item"
+            class="Nextstore\SyliusParcelPlugin\Controller\Admin\OrderItemController"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="twig" />
+            <argument type="service" id="nextstore_sylius_parcel.service.order_item" />
+            <argument type="service"
+                id="sylius.repository.order_item" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.controller.show_order_items_list_action"
+            class="Nextstore\SyliusParcelPlugin\Controller\Admin\Action\ShowOrderItemsListAction"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="twig" />
+            <argument type="service"
+                id="sylius.repository.order_item" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.controller.add_items_to_parcel_action"
+            class="Nextstore\SyliusParcelPlugin\Controller\Admin\Action\AddItemsToParcelAction"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="nextstore_sylius_parcel.service.parcel" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.controller.edit_order_item_action"
+            class="Nextstore\SyliusParcelPlugin\Controller\Admin\Action\EditOrderItemAction"
+        >
+            <argument type="service" id="nextstore_sylius_parcel.service.order_item" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.controller.edit_parcel_action"
+            class="Nextstore\SyliusParcelPlugin\Controller\Admin\Action\EditParcelAction"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="nextstore_sylius_parcel.service.parcel" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.controller.edit_parcel_item_action"
+            class="Nextstore\SyliusParcelPlugin\Controller\Admin\Action\EditParcelItemAction"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="nextstore_sylius_parcel.service.parcel" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.controller.pack_parcel_action"
+            class="Nextstore\SyliusParcelPlugin\Controller\Admin\Action\PackParcelAction"
+        >
+            <argument type="service" id="nextstore_sylius_parcel.service.parcel" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.controller.show_parcel_detail_action"
+            class="Nextstore\SyliusParcelPlugin\Controller\Admin\Action\ShowParcelDetailAction"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="twig" />
+            <argument type="service"
+                id="sylius.repository.order_item" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.controller.api_parcel"
+            class="Nextstore\SyliusParcelPlugin\Controller\Api\ParcelController"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service"
+                id="security.token_storage" />
+            <argument type="service"
+                id="serializer" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+
+        <service id="nextstore_sylius_parcel.controller.add_to_cart_manually_action"
+            class="Nextstore\SyliusParcelPlugin\Controller\Api\Action\AddToCartManuallyAction"
+        >
+            <argument type="service" id="nextstore_sylius_parcel.service.order_item" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="serializer" />
+            <!-- <argument type="service" id="nextstore_sylius_parcel.factory.product" /> -->
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+    </services>
+</container>

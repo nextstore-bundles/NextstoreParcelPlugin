@@ -1,0 +1,48 @@
+nextstore_sylius_parcel:
+    ui:
+        parcel: "Илгээмж"
+        parcels: "Илгээмжүүд"
+        edit_parcel: Илгээмж янзлах
+        new_parcel: Илгээмж үүсгэх
+        parcel_total: "Илгээмжийн Нийт дүн"
+        parcel_item_total: "Илгээмждэх бараануудын нийт дүн"
+        parcel_item: "Илгээмжийн бараа"
+        order_item: "Захиалгын бараа"
+        order_items: "Захиалгын бараанууд"
+        # TRANSITIONS
+        transition_confirm: "Баталгаажуулах"
+        transition_ship_to_mongolia: "Монгол руу илгээх"
+        transition_arrived_in_mongolia: "Монголд ирсэн болгох"
+        transition_ship_to_customer: "Хэрэглэгч рүү илгээх"
+        transition_deliver: "Илгээгдсэн болгох"
+        # STATES
+        new: "Шинэ"
+        confirmed: "Баталгаажсан"
+        cancelled: "Цуцлагдсан"
+        purchased: "Худалдан авсан"
+        arrived_at_foreign_warehouse: "Гадаад дахь агуулахад ирсэн"
+        delivered: "Илгээгдсэн"
+        shipped_to_customer: "Хэрэглэгч рүү илгээсэн"
+        arrived_in_mongolia: "Монголд ирсэн"
+        shipped_to_mongolia: "Монгол руу илгээсэн"
+
+        tracking_code: "Хянах код"
+        other_order_items: "Хэрэглэгчийн бусад захиалгын бараанууд"
+        pack: "Багцлах"
+        pack_order_items: "Захиалгын бараануудыг багцлах"
+        manage_order_items: "Захиалгын бараануудыг удирдах"
+        manage_parcel_items: "Илгээмжийн бараануудыг удирдах"
+        parcel_state: "Илгээмжийн төлөв"
+        parcel_code: "Илгээмжийн код"
+        web_url: "Web URL"
+        size: "Хэмжээ"
+        color: "Өнгө"
+        length: "Урт"
+        close: "Хаах"
+        order_number: "Захиалгын дугаар"
+        see_order: "Захиалага харах"
+        upload_excel: "Excel файл оруулах"
+        download_excel: Excel татах
+    parcel:
+        subheader: "Илгээмж удирдах"
+        webUrl: "Web URL"

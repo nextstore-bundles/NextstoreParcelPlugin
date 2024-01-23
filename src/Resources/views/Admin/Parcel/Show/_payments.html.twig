@@ -1,0 +1,60 @@
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+{% if parcel.hasPayments %}
+    <div class="ui segment" id="payment-state">
+        <span class="ui teal top attached label">
+            <i class="large payment icon"></i>
+        </span>
+        <h3 class="ui dividing header" style="margin-top: 1rem !important;">{{ 'sylius.ui.payments'|trans }}</h3>
+        <div class="ui relaxed divided list" id="sylius-payments">
+            {% for payment in parcel.payments %}
+                {% import '@SyliusUi/Macro/labels.html.twig' as label %}
+
+                <div class="item">
+                    <div class="right floated content">
+                        {% include '@SyliusAdmin/Common/Label/paymentState.html.twig' with {'data': payment.state} %}
+                    </div>
+
+                    <div class="content">
+                        <div class="header">
+                            {{ payment.method }}
+                        </div>
+                        <div class="description">
+                            {{ money.format(payment.amount, payment.parcel.currencyCode) }}
+                        </div>
+                        {% if sm_can(payment, 'parcel_complete', 'sylius_payment') %}
+                            <div class="ui segment">
+                                <form
+                                    action="{{ path('nextstore_sylius_parcel_admin_parcel_payment_complete', {'id': payment.id}) }}"
+                                    method="post" novalidate>
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token(payment.id) }}" />
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <button type="submit" class="ui icon labeled tiny blue fluid loadable button"><i class="check icon"></i> {{ 'sylius.ui.complete'|trans }}</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                        {% if sm_can(payment, 'parcel_refund', 'sylius_payment') %}
+                            <div class="ui segment">
+                                <form
+                                    action="{{ path('nextstore_sylius_parcel_admin_parcel_payment_refund', {'id': payment.id}) }}"
+                                    method="post" novalidate>
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token(payment.id) }}" />
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <button type="submit" class="ui icon labeled tiny yellow fluid loadable button"><i class="check icon"></i> {{ 'sylius.ui.refund'|trans }}</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+
+    </div>
+{% else %}
+    <div class="ui segment center aligned" id="no-payments">
+        <span class="ui grey large label">
+            <i class="ban icon"></i> {{ 'sylius.ui.no_payments'|trans }}
+        </span>
+    </div>
+{% endif %}

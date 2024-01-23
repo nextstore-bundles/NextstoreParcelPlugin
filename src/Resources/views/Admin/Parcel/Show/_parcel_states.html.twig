@@ -1,0 +1,47 @@
+{% set state_new = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_NEW') %}
+{% set state_confirmed = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_CONFIRMED') %}
+{% set state_shipped_to_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_SHIPPED_TO_MONGOLIA') %}
+{% set state_arrived_in_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_ARRIVED_IN_MONGOLIA') %}
+{% set state_shipped_to_customer = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_SHIPPED_TO_CUSTOMER') %}
+{% set state_delivered = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_DELIVERED') %}
+
+{% set state = null %}
+{% if parcel is defined %}
+    {% set state = parcel.state %}
+{% endif %}
+{% if data is defined %}
+    {% set state = data %}
+{% endif %}
+
+{% if state == state_new %}
+    <span class="ui orange label">
+        <i class="icon inbox"></i>
+        {{ 'sylius.ui.new'|trans }}
+    </span>
+{% elseif state == state_confirmed %}
+    <span class="ui yellow label">
+        <i class="icon check"></i>
+        {{ 'sylius.ui.confirmed'|trans }}
+    </span>
+{% elseif state == state_shipped_to_mongolia %}
+    <span class="ui olive label">
+        <i class="icon plane"></i>
+        {{ 'nextstore_sylius_parcel.ui.shipped_to_mongolia'|trans }}
+    </span>
+{% elseif state == state_arrived_in_mongolia %}
+    <span class="ui teal label">
+        <i class="icon building"></i>
+        {{ 'nextstore_sylius_parcel.ui.arrived_in_mongolia'|trans }}
+    </span>
+{% elseif state == state_shipped_to_customer %}
+    <span class="ui blue label">
+        <i class="icon shipping fast"></i>
+        {{ 'nextstore_sylius_parcel.ui.shipped_to_customer'|trans }}
+    </span>
+{% elseif state == state_delivered %}
+    <span
+        class="ui green label">
+        <i class="icon circle check"></i>
+        {{ 'nextstore_sylius_parcel.ui.delivered'|trans }}
+    </span>
+{% endif %}

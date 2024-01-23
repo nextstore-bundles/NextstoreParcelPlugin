@@ -1,0 +1,3 @@
+imports:
+    - "@NextstoreSyliusParcelPlugin/Resources/config/resources/parcel.yaml"
+    - "@NextstoreSyliusParcelPlugin/Resources/config/resources/order.yaml"

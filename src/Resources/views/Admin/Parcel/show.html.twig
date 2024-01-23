@@ -1,0 +1,121 @@
+{% extends '@!SyliusAdmin/layout.html.twig' %}
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+{% import '@SyliusAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
+{% block content %}
+    <div class="ui stackable two column grid">
+        <div class="ui six wide column">
+            <h1 class="ui header">
+                <i class="circular box icon"></i>
+                <div class="content">
+                    {{ 'nextstore_sylius_parcel.ui.parcel'|trans }} #{{ parcel.id }}
+                    <div class="sub header">
+                        <div class="ui horizontal divided list">
+                            <div class="item">
+                                {{ parcel.createdAt|format_datetime }}
+                            </div>
+                            <div class="item" id="sylius-order-state">
+                                {% include '@NextstoreSyliusParcelPlugin/Admin/Parcel/Show/_parcel_states.html.twig'%}
+                            </div>
+                            <div class="item" id="sylius-order-currency">
+                                {{ parcel.currencyCode }}
+                            </div>
+                            <div class="item">
+                                {{ 'sylius.ui.width'|trans }}: {{ parcel.width }} cm
+                            </div>
+                            <div class="item">
+                                {{ 'sylius.ui.height'|trans }}: {{ parcel.height }} cm
+                            </div>
+                            <div class="item">
+                                {{ 'nextstore_sylius_parcel.ui.length'|trans }}: {{ parcel.length }} cm
+                            </div>
+                            <div class="item">
+                                {{ 'sylius.ui.weight'|trans }}: {{ parcel.weight }} kg
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h1>
+        </div>
+        <div class="ui ten wide column right aligned">
+            <div class="ui icon buttons">
+                {% include '@NextstoreSyliusParcelPlugin/Admin/Parcel/Show/_state_transitions.html.twig' %}
+
+                <button
+                    onclick="showOtherItemsModal()"
+                    type="button"
+                    class="ui compact labeled icon button"
+                    style="padding-right: 5px !important;"
+                >
+                    <i class="icon eye"></i>
+                    {{ 'nextstore_sylius_parcel.ui.other_order_items'|trans }}
+                    <strong style="
+                        color: white;
+                        padding: 5px 8px;
+                        margin-left: 5px;
+                        background-color: orangered;
+                        border-radius: 30%"
+                    >
+                        {{ otherItems|length }}
+                    </strong>
+                </button>
+                <button
+                    class="ui brown button"
+                    onclick="showEditParcelModal()"
+                    type="button"
+                >
+                    <i class="icon edit"></i>
+                    {{ 'sylius.ui.edit'|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {% set breadcrumbs = [
+        { label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
+        { label: 'nextstore_sylius_parcel.ui.parcels'|trans, url: path('nextstore_sylius_parcel_admin_parcel_index') },
+        { label: '#'~parcel.code }
+    ]
+    %}
+
+    {{ breadcrumb.crumble(breadcrumbs) }}
+
+    <div class="ui stackable grid sticky-container">
+        <div class="twelve wide column sticky-column">
+            <div class="ui segment" style="overflow-x: auto">
+                {% include '@NextstoreSyliusParcelPlugin/Admin/Parcel/Show/_items_table.html.twig' %}
+            </div>
+        {% if parcel.notes is not null %}
+            <h4 class="ui top attached styled header">
+                {{ 'sylius.ui.notes'|trans }}
+            </h4>
+            <div class="ui attached segment" id="sylius-order-notes">
+                {{ parcel.notes }}
+            </div>
+        {% endif %}
+        </div>
+        <div class="four wide column">
+            {% include '@NextstoreSyliusParcelPlugin/Admin/Parcel/Show/_customer.html.twig' %}
+            {% include '@NextstoreSyliusParcelPlugin/Admin/Parcel/Show/_address.html.twig' %}
+            {% include '@NextstoreSyliusParcelPlugin/Admin/Parcel/Show/_payments.html.twig' %}
+        </div>
+    </div>
+{#    Modal other Item  #}
+    {% include '@NextstoreSyliusParcelPlugin/Admin/Parcel/Show/Modal/_other_order_items_modal.html.twig' %}
+{#    Modal Edit Parcel  #}
+    {% include '@NextstoreSyliusParcelPlugin/Admin/Parcel/Show/Modal/_parcel_edit_modal.html.twig' %}
+
+<script>
+    function showOtherItemsModal() {
+        $('#other-items-modal-{{ parcel.id }}')
+            .modal('show')
+        ;
+    }
+
+    function showEditParcelModal() {
+        $('#parcel-edit-modal-{{ parcel.id }}')
+            .modal('show')
+        ;
+    }
+</script>
+{% endblock %}

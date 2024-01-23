@@ -1,0 +1,13 @@
+{% if parcel.address is not null %}
+    <h4 class="ui attached styled header top">
+        {{ 'sylius.ui.billing_address'|trans }}
+    </h4>
+    <div class="ui attached segment" id="billing-address">
+        {% include '@SyliusAdmin/Common/_address.html.twig' with {'address': parcel.address} %}
+    </div>
+{% endif %}
+{#<div class="ui attached segment" id="edit-addresses">#}
+{#    <a href="{{ path('sylius_admin_order_update', {'id': parcel.id}) }}" class="ui icon labeled tiny fluid button">#}
+{#        <i class="pencil icon"></i> {{ 'sylius.ui.edit_addresses'|trans }}#}
+{#    </a>#}
+{#</div>#}

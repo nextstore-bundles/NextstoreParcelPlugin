@@ -1,0 +1,5 @@
+nextstore_sylius_parcel_admin:
+    resource: "@NextstoreSyliusParcelPlugin/Resources/config/routing/admin.yaml"
+
+nextstore_sylius_parcel_api:
+    resource: "@NextstoreSyliusParcelPlugin/Resources/config/routing/api.yaml"

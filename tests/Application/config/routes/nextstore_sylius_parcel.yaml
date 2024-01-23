@@ -1,0 +1,2 @@
+nextstore_sylius_parcel:
+    resource: "@NextstoreSyliusParcelPlugin/Resources/config/routing.yaml"

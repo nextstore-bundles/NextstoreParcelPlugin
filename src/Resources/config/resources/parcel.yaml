@@ -1,0 +1,20 @@
+sylius_resource:
+    resources:
+        nextstore_sylius_parcel.parcel:
+            driver: doctrine/orm
+            classes:
+                model: Nextstore\SyliusParcelPlugin\Entity\Parcel\Parcel
+                interface: Nextstore\SyliusParcelPlugin\Entity\Parcel\ParcelInterface
+                form: Nextstore\SyliusParcelPlugin\Form\Type\ParcelType
+                repository: Nextstore\SyliusParcelPlugin\Repository\Parcel\ParcelRepository
+                controller: Sylius\Bundle\ResourceBundle\Controller\ResourceController
+                factory: Sylius\Component\Resource\Factory\Factory
+        nextstore_sylius_parcel.parcel_item:
+            driver: doctrine/orm
+            classes:
+                model: Nextstore\SyliusParcelPlugin\Entity\Parcel\ParcelItem
+                interface: Nextstore\SyliusParcelPlugin\Entity\Parcel\ParcelItemInterface
+                # form: Nextstore\SyliusParcelPlugin\Form\Type\ParcelItemType
+                repository: Nextstore\SyliusParcelPlugin\Repository\Parcel\ParcelItemRepository
+                controller: Sylius\Bundle\ResourceBundle\Controller\ResourceController
+                factory: Sylius\Component\Resource\Factory\Factory

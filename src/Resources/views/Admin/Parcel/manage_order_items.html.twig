@@ -1,0 +1,175 @@
+{% extends '@!SyliusAdmin/layout.html.twig' %}
+{% import "@SyliusAdmin/Common/Macro/money.html.twig" as money %}
+
+{% block content %}
+    <div class="ui stackable two column grid">
+        <div class="column">
+            <div class="ui header">
+                <i class="circular boxes icon"></i>
+                <div class="content">
+                    {{ 'nextstore_sylius_parcel.ui.order_item'|trans }}
+                    <div class="sub header">{{ 'nextstore_sylius_parcel.ui.manage_order_items'|trans }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui stackable four column grid">
+        <div class="column">
+            <label>{{ 'sylius.ui.total'|trans }}:</label>
+            <strong>{{ items.nbResults }}</strong>
+        </div>
+    </div>
+    <div class="ui hidden divider"></div>
+    <div class="ui styled fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            <i class="filter icon"></i>
+            {{ 'sylius.ui.filters' |trans }}
+        </div>
+        <div class="content">
+            {{ form_start(form, {'action': path('nextstore_sylius_parcel_admin_manage_order_items'), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+            <div class="sylius-filters">
+                <div class="sylius-filters__field">
+                    <div class="field">
+                        {{ form_row(form.phone) }}
+                    </div>
+                </div>
+                <div class="sylius-filters__field">
+                    <div class="sylius-filters__group">
+                        <div class="field">
+                            {{ form_row(form.startDate) }}
+                        </div>
+                        <div class="field">
+                            {{ form_row(form.endDate) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="sylius-filters__field">
+                    <div class="field">
+                        {{ form_row(form.state) }}
+                    </div>
+                </div>
+                <div class="sylius-filters__field">
+                    <div class="field">
+                        {{ form_row(form.orderNumber) }}
+                    </div>
+                </div>
+                <div class="sylius-filters__field">
+
+                    <div class="field">
+                        {{ form_row(form.orderBy) }}
+                    </div>
+                </div>
+            </div>
+            <button class="ui blue labeled icon button" type="submit">
+                <i class="icon search"></i>
+                {{ 'sylius.ui.filter' |trans }}
+            </button>
+
+            <a class="ui labeled icon button" href="{{ path('nextstore_sylius_parcel_admin_manage_order_items') }}">
+                <i class="icon remove"></i>
+                {{ 'sylius.ui.clear_filters' | trans }}
+            </a>
+
+            {{ form_row(form._token) }}
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </div>
+    <div class='ui' style="margin: 10px 0px; float: left">
+        <a
+            class="ui button green"
+            href={{path('nextstore_sylius_parcel_admin_export_order_items_to_excel', {
+                phone: form.phone.vars.value,
+                state: form.state.vars.value,
+                startDate: form.startDate.vars.value,
+                endDate: form.endDate.vars.value,
+                orderBy: form.orderBy.vars.value,
+                orderNumber: form.orderNumber.vars.value,
+                trackingCode: form.trackingCode.vars.value,
+            })}}>
+            <i class="icon download"></i>
+            {{'nextstore_sylius_parcel.ui.download_excel'|trans}}
+        </a>
+    </div>
+    <div class="ui" style="margin:10px 0px; float: right">
+        <form
+            method="post"
+            enctype="multipart/form-data"
+            action="{{ path('nextstore_sylius_parcel_admin_update_order_item_state_from_excel') }}"
+            name="upload_excel_to_update_state"
+            id="upload_excel_to_update_state"
+        >
+            <div class="ui action input">
+                <input
+                    name="excel-file"
+                    id="fileSelect"
+                    type="file"
+                    required
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    class="ui input focus"
+                />
+                <button class="ui blue right labeled icon button">
+                    <i class="upload icon"></i>
+                    {{ 'nextstore_sylius_parcel.ui.upload_excel'|trans }}
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="ui green segment" style="overflow-x: auto !important; ">
+        <table class="ui celled compact small table order-summary-table" style="min-width: 1300px">
+            <thead class="full-width">
+                <tr>
+                    <th>{{'sylius.ui.product'|trans}}</th>
+                    <th>{{ 'sylius.ui.customer'|trans }}</th>
+                    <th>{{ 'nextstore_sylius_parcel.ui.order_number'|trans }}</th>
+                    <th>{{ 'nextstore_sylius_parcel.ui.tracking_code'|trans }}</th>
+                    <th>{{'sylius.ui.unit_price'|trans}}</th>
+                    <th>{{'sylius.ui.quantity'|trans}}</th>
+                    <th>{{'sylius.ui.total'|trans}}</th>
+                    <th>{{ 'sylius.ui.date'|trans }}</th>
+                    <th>{{'sylius.ui.state' |trans}}</th>
+                    <th>{{ 'sylius.ui.actions'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+                <tr id="{{ item.id }}">
+                    {% set product = item.variant.product %}
+                    {% set order = item.order %}
+                    {% set customer = order.customer %}
+                    {% set phone = '' %}
+                    {% if customer is not null and customer.phoneNumber %}
+                        {% set phone = order.customer.phoneNumber%}
+                    {% elseif customer is not null and customer.phoneNumber is null %}
+                        {% set phone = order.customer.email %}
+                    {% endif %}
+                    <td style="width: 500px">
+                        <a href="{{path('sylius_admin_product_show', {'id': product.id})}}">
+                            <h4 class="ui image header">
+                                {% include '@SyliusAdmin/Product/_mainImage.html.twig' with {'product': product, 'filter': 'sylius_admin_product_tiny_thumbnail'} %}
+                                <div class="content">
+                                    {{item.productName}}
+                                    <div class="sub header">{{item.product.code}}</div>
+                                </div>
+                            </h4>
+                        </a>
+                    </td>
+                    <td>{{ phone }}</td>
+                    <td>
+                        <a href="{{ path('sylius_admin_order_show', {id: order.id}) }}">
+                            #{{ order.number }}
+                        </a>
+                    </td>
+                    <td>{{ item.trackingCode }}</td>
+                    <td>{{ money.format(item.unitPrice, item.order.currencyCode) }}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{ money.format(item.total, item.order.currencyCode) }}</td>
+                    <td>{{ order.checkoutCompletedAt.format("Y-m-d H:i:s") }}</td>
+                    {% include '@NextstoreSyliusParcelPlugin/Admin/Order/Show/Summary/_state_transitions.html.twig' with {row: 1, edit: false}  %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {{ pagerfanta(items) }}
+{% endblock %}

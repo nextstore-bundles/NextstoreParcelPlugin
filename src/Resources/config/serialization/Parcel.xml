@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+
+<serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+>
+    <class name="Nextstore\SyliusParcelPlugin\Entity\Parcel\Parcel">
+        <attribute name="id">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="code">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="state">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="currencyCode">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="width">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="height">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="length">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="weight">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="weight">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="notes">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="itemsTotal">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="quantity">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="total">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="createdAt">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+        <attribute name="updatedAt">
+            <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
+        </attribute>
+
+        <attribute name="items">
+            <group>shop:parcel:read</group>
+        </attribute>
+        <attribute name="payments">
+            <group>shop:parcel:read</group>
+        </attribute>
+        <attribute name="customer">
+            <group>shop:parcel:read</group>
+        </attribute>
+        <attribute name="address">
+            <group>shop:parcel:read</group>
+        </attribute>
+    </class>
+</serializer>

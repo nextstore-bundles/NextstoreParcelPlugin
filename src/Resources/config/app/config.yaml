@@ -1,0 +1,22 @@
+imports:
+    - "@NextstoreSyliusParcelPlugin/Resources/config/grids/parcel.yaml"
+    - "@NextstoreSyliusParcelPlugin/Resources/config/app/state_machine.yaml"
+    - "@NextstoreSyliusParcelPlugin/Resources/config/resources.yaml"
+# jms_serializer:
+#     metadata:
+#         directories:
+#             nextstore-sylius-parcel:
+#                 namespace_prefix: "Nextstore\\SyliusParcelPlugin\\Entity"
+#                 path: "@NextstoreSyliusParcelPlugin/Resources/config/serializer"
+
+twig:
+    globals:
+        cdn_url: "%env(AWS_S3_PATH)%"
+
+sylius_ui:
+    events:
+        sylius.admin.order.show.summary:
+            blocks:
+                summary:
+                    template: "@NextstoreSyliusParcelPlugin/Admin/Order/Show/_summaryWidget.html.twig"
+                    priority: 20
