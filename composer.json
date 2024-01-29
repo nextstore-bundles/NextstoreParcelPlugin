@@ -9,7 +9,7 @@
     "require": {
         "php": "^8.0",
         "aws/aws-sdk-php": "^3.295",
-        "phpoffice/phpspreadsheet": "^1.29",
+        "phpoffice/phpspreadsheet": "^2.0",
         "sylius/mailer-bundle": "^1.8 || ^2.0@beta",
         "sylius/sylius": "^1.12",
         "symfony/webpack-encore-bundle": "^1.15"
