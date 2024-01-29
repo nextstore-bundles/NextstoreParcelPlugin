@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nextstore\SyliusParcelPlugin\Entity\Parcel;
 
 use Nextstore\SyliusParcelPlugin\Entity\MeasurementInterface;
-use Nextstore\SyliusParcelPlugin\Entity\Payment\PaymentInterface;
+use Nextstore\SyliusParcelPlugin\Entity\Payment\ParcelPaymentInterface;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Addressing\Model\Address;
 use Sylius\Component\Channel\Model\Channel;
@@ -60,17 +60,17 @@ interface ParcelInterface extends
 
     public function hasPayments(): bool;
 
-    public function addPayment(PaymentInterface $payment): void;
+    public function addPayment(ParcelPaymentInterface $payment): void;
 
-    public function removePayment(PaymentInterface $payment): void;
+    public function removePayment(ParcelPaymentInterface $payment): void;
 
-    public function hasPayment(PaymentInterface $payment): bool;
+    public function hasPayment(ParcelPaymentInterface $payment): bool;
 
     public function getAddress(): ?Address;
 
     public function setAddress(Address $address): void;
 
-    public function getLastPayment(?string $state = null): ?PaymentInterface;
+    public function getLastPayment(?string $state = null): ?ParcelPaymentInterface;
 
     public function getChannel(): ?Channel;
 

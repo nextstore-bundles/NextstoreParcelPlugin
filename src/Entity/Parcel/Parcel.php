@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Nextstore\SyliusParcelPlugin\Entity\Parcel;
 
 use Nextstore\SyliusParcelPlugin\Entity\MeasurementTrait;
-use Nextstore\SyliusParcelPlugin\Entity\Payment\PaymentInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Nextstore\SyliusParcelPlugin\Entity\Payment\ParcelPaymentInterface;
 use Sylius\Component\Addressing\Model\Address;
 use Sylius\Component\Channel\Model\Channel;
 use Sylius\Component\Customer\Model\Customer;
@@ -71,7 +71,7 @@ class Parcel implements ParcelInterface
     /** @var Customer|null */
     private $customer;
 
-    /** @var Collection|PaymentInterface[] */
+    /** @var Collection|ParcelPaymentInterface[] */
     private $payments;
 
     public function __construct()
@@ -79,7 +79,7 @@ class Parcel implements ParcelInterface
         $this->createdAt = new \DateTime();
         /** @var ArrayCollection<array-key, OrderItem> $this->items */
         $this->items = new ArrayCollection();
-        /** @var ArrayCollection<array-key, PaymentInterface> $this->payments */
+        /** @var ArrayCollection<array-key, ParcelPaymentInterface> $this->payments */
         $this->payments = new ArrayCollection();
     }
 
@@ -198,9 +198,9 @@ class Parcel implements ParcelInterface
         return !$this->payments->isEmpty();
     }
 
-    public function addPayment(PaymentInterface $payment): void
+    public function addPayment(ParcelPaymentInterface $payment): void
     {
-        Assert::isInstanceOf($payment, PaymentInterface::class);
+        Assert::isInstanceOf($payment, ParcelPaymentInterface::class);
 
         if (!$this->hasPayment($payment)) {
             $this->payments->add($payment);
@@ -208,9 +208,9 @@ class Parcel implements ParcelInterface
         }
     }
 
-    public function removePayment(PaymentInterface $payment): void
+    public function removePayment(ParcelPaymentInterface $payment): void
     {
-        Assert::isInstanceOf($payment, PaymentInterface::class);
+        Assert::isInstanceOf($payment, ParcelPaymentInterface::class);
 
         if ($this->hasPayment($payment)) {
             $this->payments->removeElement($payment);
@@ -218,7 +218,7 @@ class Parcel implements ParcelInterface
         }
     }
 
-    public function hasPayment(PaymentInterface $payment): bool
+    public function hasPayment(ParcelPaymentInterface $payment): bool
     {
         return $this->payments->contains($payment);
     }
@@ -246,7 +246,7 @@ class Parcel implements ParcelInterface
     public function recalculatePaymentTotal(): void
     {
         if ($this->hasPayments()) {
-            /** @var PaymentInterface $payment */
+            /** @var ParcelPaymentInterface $payment */
             $payment = $this->payments[0];
             $payment->setAmount($this->total);
         }
@@ -272,13 +272,13 @@ class Parcel implements ParcelInterface
         $this->address = $address;
     }
 
-    public function getLastPayment(?string $state = null): ?PaymentInterface
+    public function getLastPayment(?string $state = null): ?ParcelPaymentInterface
     {
         if ($this->payments->isEmpty()) {
             return null;
         }
 
-        $payment = $this->payments->filter(function (PaymentInterface $payment) use ($state): bool {
+        $payment = $this->payments->filter(function (ParcelPaymentInterface $payment) use ($state): bool {
             return null === $state || $payment->getState() === $state;
         })->last();
 

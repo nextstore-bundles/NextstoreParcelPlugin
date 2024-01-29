@@ -6,12 +6,6 @@
 
     <!-- src/Service/Parcel/ParcelService.php -->
     <services>
-        <!-- Order Payment Resolver -->
-        <service id="sylius.state_resolver.order_payment"
-            class="Nextstore\SyliusParcelPlugin\Resolver\OrderPaymentResolver" public="true">
-            <argument type="service" id="sm.factory" />
-        </service>
-        <!---->
         <service id="nextstore_sylius_parcel.service.aws_file_uploader"
             class="Nextstore\SyliusParcelPlugin\Service\AwsFileUploader" public="true">
             <argument type="service" id="parameter_bag" />
@@ -40,7 +34,7 @@
             <argument type="service" id="nextstore_sylius_parcel.validator.file" />
             <argument type="service" id="sylius.payment_method_resolver.default" />
             <argument type="service" id="sylius.context.channel" />
-            <argument type="service" id="nextstore_sylius_parcel.factory.payment" />
+            <argument type="service" id="nextstore_sylius_parcel.custom_factory.parcel_payment" />
         </service>
 
         <service id="nextstore_sylius_parcel.service.order_item"

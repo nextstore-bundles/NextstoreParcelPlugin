@@ -1,83 +1,99 @@
 winzou_state_machine:
-    sylius_order_item:
-        class: "%sylius.model.order_item.class%"
-        property_path: state
-        graph: sylius_order_item
-        state_machine_class: "%sylius.state_machine.class%"
-        states:
-            new: ~
-            confirmed: ~
-            cancelled: ~
-            purchased: ~
-            foreign_delivery_completed: ~
-        transitions:
-            confirm:
-                from: [new]
-                to: confirmed
-            purchase:
-                from: [confirmed]
-                to: purchased
-            cancel:
-                from: [new]
-                to: cancelled
-            foreign_delivery:
-                from: [purchased]
-                to: foreign_delivery_completed
-            restore:
-                from: [cancelled]
-                to: new
-    nextstore_parcel:
-        class: "%nextstore_sylius_parcel.model.parcel.class%"
-        property_path: state
-        graph: nextstore_parcel
-        state_machine_class: "%sylius.state_machine.class%"
-        states:
-            new: ~
-            confirmed: ~
-            shipped_to_mongolia: ~
-            arrived_in_mongolia: ~
-            shipped_to_customer: ~
-            delivered: ~
-        transitions:
-            confirm:
-                from: [new]
-                to: confirmed
-            ship_to_mongolia:
-                from: [confirmed]
-                to: shipped_to_mongolia
-            arrived_in_mongolia:
-                from: [shipped_to_mongolia]
-                to: arrived_in_mongolia
-            ship_to_customer:
-                from: [arrived_in_mongolia]
-                to: shipped_to_customer
-            deliver:
-                from: [shipped_to_customer]
-                to: delivered
-        callbacks:
-            before:
-                nextstore_create_parcel_payment:
-                    on: ["confirm"]
-                    do:
-                        [
-                            "@nextstore_sylius_parcel.service.parcel",
-                            "createParcelPayment",
-                        ]
-                    args: ["object"]
+  sylius_order_item:
+    class: "%sylius.model.order_item.class%"
+    property_path: state
+    graph: sylius_order_item
+    state_machine_class: "%sylius.state_machine.class%"
+    states:
+      new: ~
+      confirmed: ~
+      cancelled: ~
+      purchased: ~
+      foreign_delivery_completed: ~
+    transitions:
+      confirm:
+        from: [new]
+        to: confirmed
+      purchase:
+        from: [confirmed]
+        to: purchased
+      cancel:
+        from: [new]
+        to: cancelled
+      foreign_delivery:
+        from: [purchased]
+        to: foreign_delivery_completed
+      restore:
+        from: [cancelled]
+        to: new
+  nextstore_parcel:
+    class: "%nextstore_sylius_parcel.model.parcel.class%"
+    property_path: state
+    graph: nextstore_parcel
+    state_machine_class: "%sylius.state_machine.class%"
+    states:
+      new: ~
+      confirmed: ~
+      shipped_to_mongolia: ~
+      arrived_in_mongolia: ~
+      shipped_to_customer: ~
+      delivered: ~
+    transitions:
+      confirm:
+        from: [new]
+        to: confirmed
+      ship_to_mongolia:
+        from: [confirmed]
+        to: shipped_to_mongolia
+      arrived_in_mongolia:
+        from: [shipped_to_mongolia]
+        to: arrived_in_mongolia
+      ship_to_customer:
+        from: [arrived_in_mongolia]
+        to: shipped_to_customer
+      deliver:
+        from: [shipped_to_customer]
+        to: delivered
+    callbacks:
+      before:
+        nextstore_create_parcel_payment:
+          on: ["confirm"]
+          do: ["@nextstore_sylius_parcel.service.parcel", "createParcelPayment"]
+          args: ["object"]
 
-    sylius_payment:
-        transitions:
-            parcel_complete:
-                from: [new, processing, authorized]
-                to: completed
-            parcel_refund:
-                from: [completed]
-                to: refunded
-
-        callbacks:
-            after:
-                sylius_resolve_state:
-                    on: ["complete", "process", "refund", "authorize"]
-                    do: ["@sylius.state_resolver.order_payment", "resolve"]
-                    args: ["object"]
-                    priority: -100
+  nextstore_parcel_payment:
+    class: "%nextstore_sylius_parcel.model.parcel_payment.class%"
+    property_path: state
+    graph: nextstore_parcel_payment
+    state_machine_class: "%sylius.state_machine.class%"
+    states:
+      cart: ~
+      new: ~
+      processing: ~
+      authorized: ~
+      completed: ~
+      failed: ~
+      cancelled: ~
+      refunded: ~
+    transitions:
+      create:
+        from: [cart]
+        to: new
+      process:
+        from: [new]
+        to: processing
+      authorize:
+        from: [new, processing]
+        to: authorized
+      complete:
+        from: [new, processing, authorized]
+        to: completed
+      fail:
+        from: [new, processing]
+        to: failed
+      cancel:
+        from: [new, processing, authorized]
+        to: cancelled
+      refund:
+        from: [completed]
+        to: refunded

@@ -17,9 +17,8 @@
                 <cascade-all />
             </cascade>
         </one-to-many>
-        <!-- TO DO PaymentTrait -->
         <one-to-many field="payments"
-            target-entity="Nextstore\SyliusParcelPlugin\Entity\Payment\PaymentInterface"
+            target-entity="Nextstore\SyliusParcelPlugin\Entity\Payment\ParcelPaymentInterface"
             mapped-by="parcel"
             fetch="EXTRA_LAZY">
             <cascade>

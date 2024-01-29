@@ -5,13 +5,13 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="nextstore_sylius_parcel.factory.payment"
-            class="Nextstore\SyliusParcelPlugin\Factory\Payment\PaymentFactory"
-            decorates="sylius.factory.payment"
+        <service id="nextstore_sylius_parcel.custom_factory.parcel_payment"
+            class="Nextstore\SyliusParcelPlugin\Factory\Payment\ParcelPaymentFactory"
+            decorates="nextstore_sylius_parcel.factory.parcel_payment"
             decoration-priority="256"
             public="false"
         >
-            <argument type="service" id="nextstore_sylius_parcel.factory.payment.inner" />
+            <argument type="service" id="nextstore_sylius_parcel.custom_factory.parcel_payment.inner" />
         </service>
 
         <service id="nextstore_sylius_parcel.factory.product"

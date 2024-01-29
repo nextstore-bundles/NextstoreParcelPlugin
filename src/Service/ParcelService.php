@@ -7,11 +7,12 @@ namespace Nextstore\SyliusParcelPlugin\Service;
 use Nextstore\SyliusParcelPlugin\Entity\Order\OrderItemInterface;
 use Nextstore\SyliusParcelPlugin\Entity\Parcel\Parcel;
 use Nextstore\SyliusParcelPlugin\Entity\Parcel\ParcelItem;
-use Nextstore\SyliusParcelPlugin\Entity\Payment\PaymentInterface;
 use Nextstore\SyliusParcelPlugin\Exception\File\ErrorWhileReadingFileException;
 use Nextstore\SyliusParcelPlugin\Validator\ValidatorFile;
 use Nextstore\SyliusParcelPlugin\Validator\ValidatorParcel;
 use Doctrine\ORM\EntityManagerInterface;
+use Nextstore\SyliusParcelPlugin\Entity\Payment\ParcelPaymentInterface;
+use Nextstore\SyliusParcelPlugin\Factory\Payment\ParcelPaymentFactory;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -49,7 +50,7 @@ class ParcelService
         private ValidatorFile $validatorFile,
         private DefaultPaymentMethodResolver $defaultPaymentMethodResolver,
         private ChannelContextInterface $channelContext,
-        private FactoryInterface $paymentFactory,
+        private ParcelPaymentFactory $parcelPaymentFactory
     ) {
     }
 
@@ -110,7 +111,7 @@ class ParcelService
         }
 
         // $payment = new SyliusPaymentInterface();
-        $payment = $this->paymentFactory->createNew();
+        $payment = $this->parcelPaymentFactory->createNew();
         $methods = $this->em->getRepository(PaymentMethod::class)->findEnabledForChannel($channel);
         Assert::isInstanceOf($methods[0], PaymentMethod::class);
 
@@ -118,7 +119,7 @@ class ParcelService
         $payment->setCurrencyCode($parcel->getCurrencyCode());
         $payment->setAmount((int) $parcel->getTotal());
         $payment->setMethod($methods[0]);
-        $payment->setState(PaymentInterface::STATE_NEW);
+        $payment->setState(ParcelPaymentInterface::STATE_NEW);
         $payment->setDetails([]);
 
         $this->em->persist($payment);
