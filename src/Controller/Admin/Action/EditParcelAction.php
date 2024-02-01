@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Controller\Admin\Action;
 
-use Nextstore\SyliusParcelPlugin\Entity\Parcel\Parcel;
+use Nextstore\SyliusParcelPlugin\Model\Parcel;
 use Nextstore\SyliusParcelPlugin\Service\ParcelService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Controller\Api;
 
-use Nextstore\SyliusParcelPlugin\Entity\Parcel\Parcel;
+use Nextstore\SyliusParcelPlugin\Model\Parcel;
 use Doctrine\ORM\EntityManagerInterface;
-use Nextstore\SyliusParcelPlugin\Entity\Payment\ParcelPayment;
+use Nextstore\SyliusParcelPlugin\Model\ParcelPayment;
 use Sylius\Bundle\ApiBundle\Exception\PaymentNotFoundException;
 use Sylius\Component\Core\Model\PaymentMethod;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

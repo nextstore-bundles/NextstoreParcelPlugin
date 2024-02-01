@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Repository\Parcel;
 
-use Nextstore\SyliusParcelPlugin\Entity\Parcel\Parcel;
+use Nextstore\SyliusParcelPlugin\Model\Parcel;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Core\Model\Order;

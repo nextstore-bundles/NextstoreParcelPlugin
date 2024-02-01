@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Product;
 
-use Nextstore\SyliusParcelPlugin\Entity\Product\ProductInterface;
-use Nextstore\SyliusParcelPlugin\Entity\Product\ProductTrait;
+use Nextstore\SyliusParcelPlugin\Model\ProductInterface;
+use Nextstore\SyliusParcelPlugin\Model\ProductTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
 

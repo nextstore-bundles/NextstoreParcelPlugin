@@ -1,13 +1,13 @@
 imports:
-    - "@NextstoreSyliusParcelPlugin/Resources/config/grids/parcel.yaml"
-    - "@NextstoreSyliusParcelPlugin/Resources/config/app/state_machine.yaml"
-    - "@NextstoreSyliusParcelPlugin/Resources/config/resources.yaml"
-# jms_serializer:
-#     metadata:
-#         directories:
-#             nextstore-sylius-parcel:
-#                 namespace_prefix: "Nextstore\\SyliusParcelPlugin\\Entity"
-#                 path: "@NextstoreSyliusParcelPlugin/Resources/config/serializer"
+    - "@NextstoreSyliusParcelPlugin/Resources/config/app/state_machine.yml"
+    - "@NextstoreSyliusParcelPlugin/Resources/config/grids/*"
+
+jms_serializer:
+    metadata:
+        directories:
+            nextstore-sylius-parcel:
+                namespace_prefix: "Nextstore\\SyliusParcelPlugin\\Model"
+                path: "@NextstoreSyliusParcelPlugin/Resources/config/serializer"
 
 twig:
     globals:
@@ -20,3 +20,9 @@ sylius_ui:
                 summary:
                     template: "@NextstoreSyliusParcelPlugin/Admin/Order/Show/_summaryWidget.html.twig"
                     priority: 20
+
+sylius_order:
+    resources:
+        order_item:
+            classes:
+                repository: Nextstore\SyliusParcelPlugin\Doctrine\ORM\Repository\OrderItemRepository

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Factory\Product;
 
-use Nextstore\SyliusParcelPlugin\Entity\Product\ProductInterface as NextstoreProductInterface;
+use Nextstore\SyliusParcelPlugin\Model\ProductInterface as NextstoreProductInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelPricing;

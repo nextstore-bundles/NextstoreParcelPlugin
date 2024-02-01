@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Form\Type;
 
-use Nextstore\SyliusParcelPlugin\Entity\Order\OrderItemStates;
+use Nextstore\SyliusParcelPlugin\Model\OrderItemStates;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType as SymfonyDateType;

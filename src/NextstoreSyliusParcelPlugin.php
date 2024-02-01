@@ -13,7 +13,7 @@ final class NextstoreSyliusParcelPlugin extends AbstractResourceBundle
     use SyliusPluginTrait;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getSupportedDrivers(): array
     {

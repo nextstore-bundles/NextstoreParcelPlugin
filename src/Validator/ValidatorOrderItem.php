@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Validator;
 
-use Nextstore\SyliusParcelPlugin\Entity\Order\OrderItemInterface;
-use Nextstore\SyliusParcelPlugin\Entity\Order\OrderItemStates;
+use Nextstore\SyliusParcelPlugin\Model\OrderItemInterface;
+use Nextstore\SyliusParcelPlugin\Model\OrderItemStates;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Order\Model\Order;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;

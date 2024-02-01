@@ -34,7 +34,7 @@
             <argument type="service" id="nextstore_sylius_parcel.validator.file" />
             <argument type="service" id="sylius.payment_method_resolver.default" />
             <argument type="service" id="sylius.context.channel" />
-            <argument type="service" id="nextstore_sylius_parcel.custom_factory.parcel_payment" />
+            <argument type="service" id="nextstore_sylius_parcel.factory.parcel_payment" />
         </service>
 
         <service id="nextstore_sylius_parcel.service.order_item"

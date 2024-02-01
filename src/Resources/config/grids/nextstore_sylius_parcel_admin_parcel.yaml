@@ -1,0 +1,80 @@
+sylius_grid:
+    grids:
+        nextstore_sylius_parcel_admin_parcel:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%nextstore_sylius_parcel.model.parcel.class%"
+            sorting:
+                date: desc
+            fields:
+                customer:
+                    type: twig
+                    label: sylius.ui.customer
+                    sortable: customer.phoneNumber
+                    options:
+                        template: "@NextstoreSyliusParcelPlugin/Admin/Grid/Fields/_customer.html.twig"
+                code:
+                    type: string
+                    label: sylius.ui.code
+                    sortable: ~
+                quantity:
+                    type: string
+                    label: sylius.ui.quantity
+                date:
+                    type: datetime
+                    label: sylius.ui.date
+                    path: createdAt
+                    sortable: createdAt
+                    options:
+                        format: d-m-Y H:i:s
+                state:
+                    type: twig
+                    label: sylius.ui.state
+                    sortable: ~
+                    options:
+                        template: "@NextstoreSyliusParcelPlugin/Admin/Parcel/Show/_parcel_states.html.twig"
+                total:
+                    type: twig
+                    label: sylius.ui.total
+                    path: .
+                    sortable: total
+                    options:
+                        template: "@SyliusAdmin/Order/Grid/Field/total.html.twig"
+            filters:
+                code:
+                    type: string
+                    label: sylius.ui.code
+                    options:
+                        field: code
+                state:
+                    type: string
+                    label: sylius.ui.state
+                    options:
+                        field: state
+                customer:
+                    type: string
+                    label: sylius.ui.customer
+                    options:
+                        fields: [customer.email, customer.phoneNumber]
+                date:
+                    type: date
+                    label: sylius.ui.date
+                    options:
+                        field: createdAt
+                        inclusive_to: true
+                total:
+                    type: money
+                    label: sylius.ui.total
+                    options:
+                        currency_field: currencyCode
+            actions:
+                item:
+                    show:
+                        type: show
+                        label: sylius.ui.show
+                        options:
+                            link:
+                                route: nextstore_sylius_parcel_admin_parcel_detail
+                                parameters:
+                                    id: resource.id

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Factory\Order;
 
-use Nextstore\SyliusParcelPlugin\Entity\Order\OrderItemInterface as NextstoreOrderItemInterface;
+use Nextstore\SyliusParcelPlugin\Model\OrderItemInterface as NextstoreOrderItemInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Factory\CartItemFactoryInterface;

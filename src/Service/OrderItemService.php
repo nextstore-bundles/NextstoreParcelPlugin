@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Service;
 
-use Nextstore\SyliusParcelPlugin\Entity\Order\OrderItemInterface;
-use Nextstore\SyliusParcelPlugin\Entity\Order\OrderItemStates;
+use Nextstore\SyliusParcelPlugin\Model\OrderItemInterface;
+use Nextstore\SyliusParcelPlugin\Model\OrderItemStates;
 use Nextstore\SyliusParcelPlugin\Exception\FailedToAddToCartException;
 use Nextstore\SyliusParcelPlugin\Exception\File\ErrorWhileReadingFileException;
 use Nextstore\SyliusParcelPlugin\Factory\Order\OrderItemFactory;

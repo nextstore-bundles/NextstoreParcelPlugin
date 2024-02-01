@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nextstore\SyliusParcelPlugin\Controller\Admin\Action;
 
 use Nextstore\SyliusParcelPlugin\Doctrine\ORM\Repository\OrderItemRepository;
-use Nextstore\SyliusParcelPlugin\Entity\Parcel\Parcel;
+use Nextstore\SyliusParcelPlugin\Model\Parcel;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Customer\Model\Customer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Validator;
 
-use Nextstore\SyliusParcelPlugin\Entity\Parcel\Parcel;
+use Nextstore\SyliusParcelPlugin\Model\Parcel;
 use Webmozart\Assert\Assert;
 
 class ValidatorParcel

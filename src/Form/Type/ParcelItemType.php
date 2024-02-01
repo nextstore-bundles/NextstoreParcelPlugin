@@ -7,7 +7,7 @@ namespace Nextstore\SyliusParcelPlugin\Form\Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use Sylius\Component\Currency\Entity\Currency;
+use Sylius\Component\Currency\Model\Currency;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
