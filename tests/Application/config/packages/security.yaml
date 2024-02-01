@@ -12,8 +12,6 @@ security:
 
     password_hashers:
         Sylius\Component\User\Entity\UserInterface: argon2i
-        Sylius\Component\Core\Model\ShopUser: argon2i
-        Sylius\Component\Core\Model\AdminUser: argon2i
     firewalls:
         admin:
             switch_user: true

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Controller\Admin;
 
-use Nextstore\SyliusParcelPlugin\Entity\Parcel\ParcelItem;
+use Nextstore\SyliusParcelPlugin\Model\ParcelItem;
 use Nextstore\SyliusParcelPlugin\Form\Type\ParcelItemFilterType;
 use Nextstore\SyliusParcelPlugin\Repository\Parcel\ParcelItemRepository;
 use Nextstore\SyliusParcelPlugin\Service\ParcelService;
@@ -50,6 +50,7 @@ class ParcelItemController extends AbstractController
             'trackingCode' => $trackingCode,
             'parcelCode' => $parcelCode,
         ]);
+
 
         /** @var ParcelItemRepository $parcelItemRepository */
         $parcelItemRepository = $this->entityManager->getRepository(ParcelItem::class);

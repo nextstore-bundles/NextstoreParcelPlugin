@@ -1,9 +1,9 @@
 
-{% set state_new = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Order\\OrderItemStates::STATE_NEW') %}
-{% set state_confirmed = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Order\\OrderItemStates::STATE_CONFIRMED') %}
-{% set state_cancelled = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Order\\OrderItemStates::STATE_CANCELLED') %}
-{% set state_purchased = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Order\\OrderItemStates::STATE_PURCHASED') %}
-{% set state_arrived_at_foreign_warehouse = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Order\\OrderItemStates::STATE_FOREIGN_DELIVERY_COMPLETED') %}
+{% set state_new = constant('Nextstore\\SyliusParcelPlugin\\Model\\OrderItemStates::STATE_NEW') %}
+{% set state_confirmed = constant('Nextstore\\SyliusParcelPlugin\\Model\\OrderItemStates::STATE_CONFIRMED') %}
+{% set state_cancelled = constant('Nextstore\\SyliusParcelPlugin\\Model\\OrderItemStates::STATE_CANCELLED') %}
+{% set state_purchased = constant('Nextstore\\SyliusParcelPlugin\\Model\\OrderItemStates::STATE_PURCHASED') %}
+{% set state_arrived_at_foreign_warehouse = constant('Nextstore\\SyliusParcelPlugin\\Model\\OrderItemStates::STATE_FOREIGN_DELIVERY_COMPLETED') %}
 
 
 {% if item.state == state_new %}

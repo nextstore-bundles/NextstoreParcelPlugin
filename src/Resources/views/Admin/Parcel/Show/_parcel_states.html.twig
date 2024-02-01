@@ -1,9 +1,9 @@
-{% set state_new = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_NEW') %}
-{% set state_confirmed = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_CONFIRMED') %}
-{% set state_shipped_to_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_SHIPPED_TO_MONGOLIA') %}
-{% set state_arrived_in_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_ARRIVED_IN_MONGOLIA') %}
-{% set state_shipped_to_customer = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_SHIPPED_TO_CUSTOMER') %}
-{% set state_delivered = constant('Nextstore\\SyliusParcelPlugin\\Entity\\Parcel\\Parcel::STATE_DELIVERED') %}
+{% set state_new = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_NEW') %}
+{% set state_confirmed = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_CONFIRMED') %}
+{% set state_shipped_to_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_SHIPPED_TO_MONGOLIA') %}
+{% set state_arrived_in_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_ARRIVED_IN_MONGOLIA') %}
+{% set state_shipped_to_customer = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_SHIPPED_TO_CUSTOMER') %}
+{% set state_delivered = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_DELIVERED') %}
 
 {% set state = null %}
 {% if parcel is defined %}

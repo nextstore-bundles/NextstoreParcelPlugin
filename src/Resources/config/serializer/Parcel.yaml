@@ -1,0 +1,3 @@
+Nextstore\SyliusParcelPlugin\Model\Parcel:
+    exclusion_policy: ALL
+    xml_root_name: parcel

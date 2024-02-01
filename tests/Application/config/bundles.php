@@ -27,6 +27,7 @@ return [
     Sylius\Bundle\ReviewBundle\SyliusReviewBundle::class => ['all' => true],
     Sylius\Bundle\CoreBundle\SyliusCoreBundle::class => ['all' => true],
     Sylius\Bundle\ResourceBundle\SyliusResourceBundle::class => ['all' => true],
+    Nextstore\SyliusParcelPlugin\NextstoreSyliusParcelPlugin::class => ['all' => false],
     Sylius\Bundle\GridBundle\SyliusGridBundle::class => ['all' => true],
     winzou\Bundle\StateMachineBundle\winzouStateMachineBundle::class => ['all' => true],
     Sonata\BlockBundle\SonataBlockBundle::class => ['all' => true],
@@ -57,5 +58,4 @@ return [
     Sylius\Calendar\SyliusCalendarBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     League\FlysystemBundle\FlysystemBundle::class => ['all' => true],
-    Nextstore\SyliusParcelPlugin\NextstoreSyliusParcelPlugin::class => ['all' => true],
 ];

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Doctrine\ORM\Repository;
 
-use Nextstore\SyliusParcelPlugin\Entity\Order\OrderItemStates;
-use Nextstore\SyliusParcelPlugin\Entity\Parcel\ParcelItem;
+use Nextstore\SyliusParcelPlugin\Model\OrderItemStates;
+use Nextstore\SyliusParcelPlugin\Model\ParcelItem;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\OrderItemRepository as BaseOrderItemRepository;
 use Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Core\Model\Order;

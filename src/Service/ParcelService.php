@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Service;
 
-use Nextstore\SyliusParcelPlugin\Entity\Order\OrderItemInterface;
-use Nextstore\SyliusParcelPlugin\Entity\Parcel\Parcel;
-use Nextstore\SyliusParcelPlugin\Entity\Parcel\ParcelItem;
+use Nextstore\SyliusParcelPlugin\Model\OrderItemInterface;
+use Nextstore\SyliusParcelPlugin\Model\Parcel;
+use Nextstore\SyliusParcelPlugin\Model\ParcelItem;
 use Nextstore\SyliusParcelPlugin\Exception\File\ErrorWhileReadingFileException;
 use Nextstore\SyliusParcelPlugin\Validator\ValidatorFile;
 use Nextstore\SyliusParcelPlugin\Validator\ValidatorParcel;
 use Doctrine\ORM\EntityManagerInterface;
-use Nextstore\SyliusParcelPlugin\Entity\Payment\ParcelPaymentInterface;
-use Nextstore\SyliusParcelPlugin\Factory\Payment\ParcelPaymentFactory;
+use Nextstore\SyliusParcelPlugin\Model\ParcelPaymentInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -50,7 +49,7 @@ class ParcelService
         private ValidatorFile $validatorFile,
         private DefaultPaymentMethodResolver $defaultPaymentMethodResolver,
         private ChannelContextInterface $channelContext,
-        private ParcelPaymentFactory $parcelPaymentFactory
+        private FactoryInterface $parcelPaymentFactory
     ) {
     }
 
