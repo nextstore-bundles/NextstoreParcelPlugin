@@ -13,9 +13,9 @@ class ValidatorParcel
     {
         $validTransitions = [
             Parcel::TRANSITION_CONFIRM,
-            Parcel::TRANSITION_SHIP_TO_MONGOLIA,
-            Parcel::TRANSITION_ARRIVED_IN_MONGOLIA,
-            Parcel::TRANSITION_SHIP_TO_MONGOLIA,
+            Parcel::TRANSITION_SHIP_TO_HOMELAND,
+            Parcel::TRANSITION_ARRIVED_IN_HOMELAND,
+            Parcel::TRANSITION_SHIP_TO_HOMELAND,
             Parcel::TRANSITION_SHIP_TO_CUSTOMER,
             Parcel::TRANSITION_DELIVER,
         ];

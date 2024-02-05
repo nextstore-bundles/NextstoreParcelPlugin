@@ -1,28 +1,32 @@
 imports:
-    - "@NextstoreSyliusParcelPlugin/Resources/config/app/state_machine.yml"
-    - "@NextstoreSyliusParcelPlugin/Resources/config/grids/*"
+  - "@NextstoreSyliusParcelPlugin/Resources/config/app/state_machine.yml"
+  - "@NextstoreSyliusParcelPlugin/Resources/config/grids/*"
+
+payum:
+  storages:
+    Nextstore\SyliusParcelPlugin\Model\ParcelPayment: { doctrine: orm }
 
 jms_serializer:
-    metadata:
-        directories:
-            nextstore-sylius-parcel:
-                namespace_prefix: "Nextstore\\SyliusParcelPlugin\\Model"
-                path: "@NextstoreSyliusParcelPlugin/Resources/config/serializer"
+  metadata:
+    directories:
+      nextstore-sylius-parcel:
+        namespace_prefix: "Nextstore\\SyliusParcelPlugin\\Model"
+        path: "@NextstoreSyliusParcelPlugin/Resources/config/serializer"
 
 twig:
-    globals:
-        cdn_url: "%env(AWS_S3_PATH)%"
+  globals:
+    cdn_url: "%env(AWS_S3_PATH)%"
 
 sylius_ui:
-    events:
-        sylius.admin.order.show.summary:
-            blocks:
-                summary:
-                    template: "@NextstoreSyliusParcelPlugin/Admin/Order/Show/_summaryWidget.html.twig"
-                    priority: 20
+  events:
+    sylius.admin.order.show.summary:
+      blocks:
+        summary:
+          template: "@NextstoreSyliusParcelPlugin/Admin/Order/Show/_summaryWidget.html.twig"
+          priority: 20
 
 sylius_order:
-    resources:
-        order_item:
-            classes:
-                repository: Nextstore\SyliusParcelPlugin\Doctrine\ORM\Repository\OrderItemRepository
+  resources:
+    order_item:
+      classes:
+        repository: Nextstore\SyliusParcelPlugin\Doctrine\ORM\Repository\OrderItemRepository

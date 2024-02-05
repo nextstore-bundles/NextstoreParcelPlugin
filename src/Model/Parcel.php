@@ -20,9 +20,9 @@ class Parcel implements ParcelInterface
 
     public const STATE_CONFIRMED = 'confirmed';
 
-    public const STATE_SHIPPED_TO_MONGOLIA = 'shipped_to_mongolia';
+    public const STATE_SHIPPED_TO_HOMELAND = 'shipped_to_homeland';
 
-    public const STATE_ARRIVED_IN_MONGOLIA = 'arrived_in_mongolia';
+    public const STATE_ARRIVED_IN_HOMELAND = 'arrived_in_homeland';
 
     public const STATE_SHIPPED_TO_CUSTOMER = 'shipped_to_customer';
 
@@ -32,9 +32,9 @@ class Parcel implements ParcelInterface
 
     public const TRANSITION_CONFIRM = 'confirm';
 
-    public const TRANSITION_SHIP_TO_MONGOLIA = 'ship_to_mongolia';
+    public const TRANSITION_SHIP_TO_HOMELAND = 'ship_to_homeland';
 
-    public const TRANSITION_ARRIVED_IN_MONGOLIA = 'arrived_in_mongolia';
+    public const TRANSITION_ARRIVED_IN_HOMELAND = 'arrived_in_homeland';
 
     public const TRANSITION_SHIP_TO_CUSTOMER = 'ship_to_customer';
 

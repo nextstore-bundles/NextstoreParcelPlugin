@@ -1,7 +1,7 @@
 {% set state_new = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_NEW') %}
 {% set state_confirmed = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_CONFIRMED') %}
-{% set state_shipped_to_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_SHIPPED_TO_MONGOLIA') %}
-{% set state_arrived_in_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_ARRIVED_IN_MONGOLIA') %}
+{% set state_shipped_to_homeland= constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_SHIPPED_TO_HOMELAND') %}
+{% set state_arrived_in_homeland= constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_ARRIVED_IN_HOMELAND') %}
 {% set state_shipped_to_customer = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_SHIPPED_TO_CUSTOMER') %}
 {% set state_delivered = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_DELIVERED') %}
 
@@ -23,15 +23,15 @@
         <i class="icon check"></i>
         {{ 'sylius.ui.confirmed'|trans }}
     </span>
-{% elseif state == state_shipped_to_mongolia %}
+{% elseif state == state_shipped_to_homeland%}
     <span class="ui olive label">
         <i class="icon plane"></i>
-        {{ 'nextstore_sylius_parcel.ui.shipped_to_mongolia'|trans }}
+        {{ 'nextstore_sylius_parcel.ui.shipped_to_homeland'|trans }}
     </span>
-{% elseif state == state_arrived_in_mongolia %}
+{% elseif state == state_arrived_in_homeland%}
     <span class="ui teal label">
         <i class="icon building"></i>
-        {{ 'nextstore_sylius_parcel.ui.arrived_in_mongolia'|trans }}
+        {{ 'nextstore_sylius_parcel.ui.arrived_in_homeland'|trans }}
     </span>
 {% elseif state == state_shipped_to_customer %}
     <span class="ui blue label">
