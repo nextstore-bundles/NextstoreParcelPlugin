@@ -60,8 +60,8 @@ class ParcelItemFilterType extends AbstractType
                 'choices' => [
                     'sylius.ui.new' => Parcel::STATE_NEW,
                     'nextstore_sylius_parcel.ui.confirmed' => Parcel::STATE_CONFIRMED,
-                    'nextstore_sylius_parcel.ui.shipped_to_mongolia' => Parcel::STATE_SHIPPED_TO_MONGOLIA,
-                    'nextstore_sylius_parcel.ui.arrived_in_mongolia' => Parcel::STATE_ARRIVED_IN_MONGOLIA,
+                    'nextstore_sylius_parcel.ui.shipped_to_homeland' => Parcel::STATE_SHIPPED_TO_HOMELAND,
+                    'nextstore_sylius_parcel.ui.arrived_in_homeland' => Parcel::STATE_ARRIVED_IN_HOMELAND,
                     'nextstore_sylius_parcel.ui.shipped_to_customer' => Parcel::STATE_SHIPPED_TO_CUSTOMER,
                     'nextstore_sylius_parcel.ui.delivered' => Parcel::STATE_DELIVERED,
                 ],
@@ -80,8 +80,7 @@ class ParcelItemFilterType extends AbstractType
                 'label' => 'nextstore_sylius_parcel.ui.parcel_code',
                 'required' => false,
                 'data' => $options['data']['parcelCode'],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1,7 +1,7 @@
 {% set state_new = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_NEW') %}
 {% set state_confirmed = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_CONFIRMED') %}
-{% set state_shipped_to_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_SHIPPED_TO_MONGOLIA') %}
-{% set state_arrived_in_mongolia = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_ARRIVED_IN_MONGOLIA') %}
+{% set state_shipped_to_homeland= constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_SHIPPED_TO_HOMELAND') %}
+{% set state_arrived_in_homeland= constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_ARRIVED_IN_HOMELAND') %}
 {% set state_shipped_to_customer = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_SHIPPED_TO_CUSTOMER') %}
 {% set state_delivered = constant('Nextstore\\SyliusParcelPlugin\\Model\\Parcel::STATE_DELIVERED') %}
 
@@ -19,29 +19,29 @@
     </form>
 {% elseif parcel.state == state_confirmed %}
     <form
-        name="parcel-ship-mongolia-{{ parcel.id }}"
+        name="parcel-ship-homeland-{{ parcel.id }}"
         method="post"
-        action="{{ path('nextstore_sylius_parcel_admin_parcel_ship_to_mongolia', {'id': parcel.id}) }}"
+        action="{{ path('nextstore_sylius_parcel_admin_parcel_ship_to_homeland', {'id': parcel.id}) }}"
     >
         <input type="hidden" name="_csrf_token" value="{{ csrf_token(parcel.id) }}">
         <button class="ui olive button" type="submit">
             <i class="icon plane"></i>
-            {{ 'nextstore_sylius_parcel.ui.transition_ship_to_mongolia'|trans }}
+            {{ 'nextstore_sylius_parcel.ui.transition_ship_to_homeland'|trans }}
         </button>
     </form>
-{% elseif parcel.state == state_shipped_to_mongolia %}
+{% elseif parcel.state == state_shipped_to_homeland %}
     <form
-        name="parcel-arrived-in-mongolia-{{ parcel.id }}"
+        name="parcel-arrived-in-homeland-{{ parcel.id }}"
         method="post"
-        action="{{ path('nextstore_sylius_parcel_admin_parcel_arrived_in_mongolia', {'id': parcel.id }) }}"
+        action="{{ path('nextstore_sylius_parcel_admin_parcel_arrived_in_homeland', {'id': parcel.id }) }}"
     >
         <input type="hidden" name="_csrf_token" value="{{ csrf_token(parcel.id) }}">
         <button class="ui teal button" type="submit">
             <i class="icon building"></i>
-            {{ 'nextstore_sylius_parcel.ui.transition_arrived_in_mongolia'|trans }}
+            {{ 'nextstore_sylius_parcel.ui.transition_arrived_in_homeland'|trans }}
         </button>
     </form>
-{% elseif parcel.state == state_arrived_in_mongolia %}
+{% elseif parcel.state == state_arrived_in_homeland %}
     <form
         name="parcel-ship-customer-{{ parcel.id }}"
         method="post"

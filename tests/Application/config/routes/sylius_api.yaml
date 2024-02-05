@@ -1,3 +1,24 @@
 sylius_api:
-    resource: "@SyliusApiBundle/Resources/config/routing.yml"
-    prefix: "%sylius.security.new_api_route%"
+  resource: "@SyliusApiBundle/Resources/config/routing.yml"
+  prefix: "%sylius.security.new_api_route%"
+# Qpay
+sylius_shop_api_qpay_callback:
+  path: /api/v2/shop/parcel/payment/qpay_callback
+  methods: [GET, POST]
+  defaults:
+    _controller: Tests\Nextstore\SyliusParcelPlugin\Application\src\Controller\Payment\QPayController::acceptQPayPaymentAction
+    _format: json
+
+sylius_shop_api_parcel_detail_qpay_payment:
+  path: /api/v2/shop/parcel/{parcelId}/qpay-payment
+  methods: [POST]
+  defaults:
+    _controller: Tests\Nextstore\SyliusParcelPlugin\Application\src\Controller\Payment\QPayController::detailAction
+    _format: json
+
+sylius_shop_api_parcel_check_qpay_payment:
+  path: /api/v2/shop/parcel/payments/{id}/check/qpay-payment
+  methods: [POST]
+  defaults:
+    _controller: Tests\Nextstore\SyliusParcelPlugin\Application\src\Controller\Payment\QPayController::checkAction
+    _format: json
