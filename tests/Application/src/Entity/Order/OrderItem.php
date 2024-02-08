@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Order;
 
-use Nextstore\SyliusParcelPlugin\Model\OrderItemInterface;
-use Nextstore\SyliusParcelPlugin\Model\OrderItemTrait;
+use Nextstore\SyliusDropshippingCorePlugin\Model\OrderItemInterface;
+use Nextstore\SyliusDropshippingCorePlugin\Model\OrderItemTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\OrderItem as BaseOrderItem;
 
