@@ -17,13 +17,12 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use SM\Factory\FactoryInterface as SMFactory;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
-use Sylius\Component\Core\Model\Address;
-use Sylius\Component\Core\Model\Customer;
-use Sylius\Component\Core\Model\OrderItem;
-use Sylius\Component\Core\Model\PaymentMethod;
-use Sylius\Component\Core\Resolver\DefaultPaymentMethodResolver;
+use Sylius\Component\Addressing\Model\AddressInterface;
+use Sylius\Component\Customer\Model\CustomerInterface;
+use Sylius\Component\Payment\Model\PaymentMethodInterface;
+use Sylius\Component\Payment\Resolver\DefaultPaymentMethodResolverInterface;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
-use Sylius\Component\Order\Model\Order;
+use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -47,7 +46,7 @@ class ParcelService
         private ParameterBagInterface $parameterBag,
         private ValidatorParcel $validatorParcel,
         private ValidatorFile $validatorFile,
-        private DefaultPaymentMethodResolver $defaultPaymentMethodResolver,
+        private DefaultPaymentMethodResolverInterface $defaultPaymentMethodResolver,
         private ChannelContextInterface $channelContext,
         private FactoryInterface $parcelPaymentFactory
     ) {
@@ -64,26 +63,26 @@ class ParcelService
         $parcel->setState(Parcel::STATE_NEW);
         $parcel->setChannel($channel);
 
-        $customer = $this->em->getRepository(Customer::class)->find($customerId);
-        Assert::isInstanceOf($customer, Customer::class);
+        $customer = $this->em->getRepository(CustomerInterface::class)->find($customerId);
+        Assert::isInstanceOf($customer, CustomerInterface::class);
         $parcel->setCustomer($customer);
         $parcel->setCurrencyCode($this->currencyContext->getCurrencyCode());
 
         if (!$addressId) {
             $address = $customer->getAddresses()[0];
         } else {
-            $address = $this->em->getRepository(Address::class)->find($addressId);
-            if (!$address instanceof Address) {
+            $address = $this->em->getRepository(AddressInterface::class)->find($addressId);
+            if (!$address instanceof AddressInterface) {
                 $address = $customer->getAddresses()[0];
             }
         }
-        Assert::isInstanceOf($address, Address::class);
+        Assert::isInstanceOf($address, AddressInterface::class);
         $parcel->setAddress($address);
         foreach ($itemIds as $id) {
             $item = $this->em->getRepository(OrderItemInterface::class)->find($id);
             Assert::isInstanceOf($item, OrderItemInterface::class);
             $order = $item->getOrder();
-            Assert::isInstanceOf($order, Order::class);
+            Assert::isInstanceOf($order, OrderInterface::class);
 
             /** @var ParcelItem $parcelItem */
             $parcelItem = $this->parcelItemFactory->createNew();
@@ -111,8 +110,8 @@ class ParcelService
 
         // $payment = new SyliusPaymentInterface();
         $payment = $this->parcelPaymentFactory->createNew();
-        $methods = $this->em->getRepository(PaymentMethod::class)->findEnabledForChannel($channel);
-        Assert::isInstanceOf($methods[0], PaymentMethod::class);
+        $methods = $this->em->getRepository(PaymentMethodInterface::class)->findEnabledForChannel($channel);
+        Assert::isInstanceOf($methods[0], PaymentMethodInterface::class);
 
         $payment->setParcel($parcel);
         $payment->setCurrencyCode($parcel->getCurrencyCode());
@@ -178,7 +177,7 @@ class ParcelService
     public function addItemsToParcel(Parcel $parcel, $itemIds): void
     {
         foreach ($itemIds as $itemId) {
-            $orderItem = $this->em->getRepository(OrderItem::class)->find($itemId);
+            $orderItem = $this->em->getRepository(OrderItemInterface::class)->find($itemId);
             $parcelItem = $this->parcelItemFactory->createNew();
             $parcelItem->setParcel($parcel);
             $parcelItem->setOrderItem($orderItem);
