@@ -6,6 +6,7 @@ namespace Nextstore\SyliusParcelPlugin\Validator;
 
 use Nextstore\SyliusParcelPlugin\Model\OrderItemStates;
 use Doctrine\ORM\EntityManagerInterface;
+use Nextstore\SyliusDropshippingCorePlugin\Model\OrderItemInterface;
 use Sylius\Component\Order\Model\Order;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use Webmozart\Assert\Assert;
