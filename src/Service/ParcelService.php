@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Service;
 
-use Nextstore\SyliusParcelPlugin\Model\OrderItemInterface;
+use Nextstore\SyliusDropshippingCorePlugin\Model\OrderItemInterface;
 use Nextstore\SyliusParcelPlugin\Model\Parcel;
 use Nextstore\SyliusParcelPlugin\Model\ParcelItem;
 use Nextstore\SyliusParcelPlugin\Exception\File\ErrorWhileReadingFileException;

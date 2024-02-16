@@ -6,7 +6,6 @@
 
     <imports>
         <import resource="services/controller.xml" />
-        <import resource="services/factory.xml" />
         <import resource="services/service.xml" />
         <import resource="services/doctrine_extension.xml" />
         <import resource="services/form.xml" />

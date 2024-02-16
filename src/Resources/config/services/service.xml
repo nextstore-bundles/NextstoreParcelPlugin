@@ -45,8 +45,6 @@
             <argument type="service" id="parameter_bag" />
             <argument type="service" id="sm.factory" />
             <argument type="service" id="nextstore_sylius_parcel.service.aws_file_uploader" />
-            <argument type="service" id="nextstore_sylius_parcel.factory.product" />
-            <argument type="service" id="nextstore_sylius_parcel.factory.order_item" />
         </service>
     </services>
 </container>

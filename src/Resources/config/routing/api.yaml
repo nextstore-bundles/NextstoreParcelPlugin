@@ -3,9 +3,3 @@ nextstore_api_parcel_payment_method_select:
     methods: ["PATCH"]
     defaults:
         _controller: nextstore_sylius_parcel.controller.api_parcel::selectPaymentMethod
-
-nextstore_api_order_add_to_cart_manually:
-    path: /api/v2/shop/orders/{token}/manually
-    methods: ["POST"]
-    defaults:
-        _controller: nextstore_sylius_parcel.controller.add_to_cart_manually_action
