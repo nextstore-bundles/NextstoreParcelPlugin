@@ -125,17 +125,5 @@
             <tag name="controller.service_arguments" />
         </service>
 
-        <service id="nextstore_sylius_parcel.controller.add_to_cart_manually_action"
-            class="Nextstore\SyliusParcelPlugin\Controller\Api\Action\AddToCartManuallyAction"
-        >
-            <argument type="service" id="nextstore_sylius_parcel.service.order_item" />
-            <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="serializer" />
-            <!-- <argument type="service" id="nextstore_sylius_parcel.factory.product" /> -->
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
-            <tag name="controller.service_arguments" />
-        </service>
     </services>
 </container>

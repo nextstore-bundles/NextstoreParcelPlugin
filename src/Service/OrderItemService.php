@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Service;
 
-use Nextstore\SyliusParcelPlugin\Model\OrderItemInterface;
 use Nextstore\SyliusParcelPlugin\Model\OrderItemStates;
-use Nextstore\SyliusParcelPlugin\Exception\FailedToAddToCartException;
 use Nextstore\SyliusParcelPlugin\Exception\File\ErrorWhileReadingFileException;
-use Nextstore\SyliusParcelPlugin\Factory\Order\OrderItemFactory;
-use Nextstore\SyliusParcelPlugin\Factory\Product\ProductFactory;
 use Nextstore\SyliusParcelPlugin\Validator\ValidatorFile;
 use Nextstore\SyliusParcelPlugin\Validator\ValidatorOrderItem;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,8 +33,6 @@ class OrderItemService
         private ParameterBagInterface $parameterBag,
         private FactoryInterface $stateMachineFactory,
         private AwsFileUploader $awsFileUploader,
-        private ProductFactory $productFactory,
-        private OrderItemFactory $orderItemFactory,
     ) {
     }
 
@@ -209,25 +203,5 @@ class OrderItemService
         });
 
         return $response;
-    }
-
-    /**
-     * @param array<int,mixed> $params
-     */
-    public function addToCartManually(Order $cart, array $params): Order
-    {
-        try {
-            $this->validatorOrderItem->validateAddToCartManually($params);
-
-            /** @var ProductFactory $productFactory */
-            $productFactory = $this->productFactory;
-            $product = $productFactory->createProductManually($params, 'manual');
-
-            $order = $this->orderItemFactory->createManually($product, $cart, $params);
-
-            return $order;
-        } catch (\Exception $e) {
-            throw new FailedToAddToCartException($e->getMessage(), $e->getCode());
-        }
     }
 }
