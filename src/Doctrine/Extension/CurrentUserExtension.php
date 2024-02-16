@@ -12,7 +12,7 @@ use ApiPlatform\Metadata\Operation;
 use Doctrine\ORM\QueryBuilder;
 use Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Core\Model\ShopUser;
-use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Webmozart\Assert\Assert;
 
