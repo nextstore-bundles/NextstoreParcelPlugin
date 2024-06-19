@@ -15,7 +15,7 @@ final class ParcelAutocompleteChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'resource' => 'nextstore_sylius_parcel_parcel',
+            'resource' => 'nextstore_sylius_parcel.parcel',
             'choice_name' => 'code',
             'choice_value' => 'id',
         ]);

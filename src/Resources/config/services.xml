@@ -5,6 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <imports>
+        <import resource="services/filters.xml" />
         <import resource="services/controller.xml" />
         <import resource="services/service.xml" />
         <import resource="services/doctrine_extension.xml" />
