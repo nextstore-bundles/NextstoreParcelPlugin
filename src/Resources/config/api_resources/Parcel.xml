@@ -26,6 +26,10 @@
                 <attribute name="normalization_context">
                     <attribute name="groups">shop:parcel:list</attribute>
                 </attribute>
+                <attribute name="filters">
+                    <attribute>parcel.search_filter</attribute>
+                    <attribute>parcel.order_filter</attribute>
+                </attribute>
 
             </collectionOperation>
 
@@ -50,4 +54,3 @@
         <property name="customer" required="false" />
     </resource>
 </resources>
-

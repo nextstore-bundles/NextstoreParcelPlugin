@@ -58,6 +58,6 @@ final class ParcelItemType extends AbstractResourceType
      */
     public function getBlockPrefix(): string
     {
-        return 'nextstore_sylius_parcel_parcel';
+        return 'nextstore_sylius_parcel_parcel_item';
     }
 }

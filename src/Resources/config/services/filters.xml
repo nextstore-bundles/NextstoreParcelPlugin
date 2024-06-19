@@ -1,0 +1,28 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service
+            id="parcel.search_filter"
+            parent="api_platform.doctrine.orm.search_filter"
+        >
+            <argument type="collection">
+                <argument key="state">exact</argument>
+                <argument key="code">partial</argument>
+            </argument>
+            <tag name="api_platform.filter"/>
+        </service>
+        <service
+            id="parcel.order_filter"
+            parent="api_platform.doctrine.orm.order_filter"
+        >
+            <argument type="collection">
+                <argument key="total">~</argument>
+                <argument key="createdAt">asc</argument>
+                <argument key="updatedAt">~</argument>
+            </argument>
+            <tag name="api_platform.filter"/>
+        </service>
+    </services>
+</container>
