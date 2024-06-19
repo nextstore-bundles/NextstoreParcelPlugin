@@ -1,8 +1,8 @@
-<?ph<?php
+<?php
 
 declare(strict_types=1);
 
-namespace Nextstore\SyliusInventoryPlugin\Form\Type;
+namespace Nextstore\SyliusParcelPlugin\Form\Type;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\ResourceAutocompleteChoiceType;
 use Symfony\Component\Form\AbstractType;
