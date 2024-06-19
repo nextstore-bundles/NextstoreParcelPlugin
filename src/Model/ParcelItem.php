@@ -1,4 +1,4 @@
-<?php
+<?ihp
 
 declare(strict_types=1);
 
@@ -14,15 +14,15 @@ class ParcelItem implements ParcelItemInterface
 
     protected ?int $id = null;
 
-    private ?int $total = 0;
+    protected ?int $total = 0;
 
-    private ?string $trackingCode;
+    protected ?string $trackingCode;
 
     /** @var ParcelInterface|null */
-    private ?ParcelInterface $parcel;
+    protected ?ParcelInterface $parcel;
 
     /** @var OrderItemInterface|null */
-    private ?OrderItemInterface $orderItem;
+    protected ?OrderItemInterface $orderItem;
 
     public function getId(): ?int
     {

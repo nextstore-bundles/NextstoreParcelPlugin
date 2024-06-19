@@ -7,16 +7,16 @@ namespace Nextstore\SyliusParcelPlugin\Model;
 trait MeasurementTrait
 {
     /** @var float|null */
-    private $width = 0;
+    protected $width = 0;
 
     /** @var float|null */
-    private $height = 0;
+    protected $height = 0;
 
     /** @var float|null */
-    private $length = 0;
+    protected $length = 0;
 
     /** @var float|null */
-    private $weight = 0;
+    protected $weight = 0;
 
     public function getWeight(): ?float
     {

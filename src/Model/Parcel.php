@@ -47,32 +47,32 @@ class Parcel implements ParcelInterface
 
     protected ?string $code = null;
 
-    private ?int $itemsTotal = 0;
+    protected ?int $itemsTotal = 0;
 
-    private ?int $total = 0;
+    protected ?int $total = 0;
 
-    private ?int $quantity = 0;
+    protected ?int $quantity = 0;
 
-    private ?string $state;
+    protected ?string $state;
 
-    private ?string $currencyCode;
+    protected ?string $currencyCode;
 
-    private ?string $notes;
+    protected ?string $notes;
 
     /** @var AddressInterface|null */
-    private ?AddressInterface $address;
+    protected ?AddressInterface $address;
 
     /** @var Collection|ParcelItemInterface[] */
-    private  $items;
+    protected  $items;
 
     /** @var ChannelInterface|null */
-    private ?ChannelInterface $channel;
+    protected ?ChannelInterface $channel;
 
     /** @var CustomerInterface|null */
-    private ?CustomerInterface $customer;
+    protected ?CustomerInterface $customer;
 
     /** @var Collection|ParcelPaymentInterface[] */
-    private $payments;
+    protected $payments;
 
     public function __construct()
     {
