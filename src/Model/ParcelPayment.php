@@ -11,7 +11,7 @@ use Sylius\Component\Payment\Model\Payment as BasePayment;
 class ParcelPayment extends BasePayment implements ParcelPaymentInterface
 {
     /** @var Parcel */
-    private ParcelInterface $parcel;
+    protected ParcelInterface $parcel;
 
     public function getParcel(): ?ParcelInterface
     {
