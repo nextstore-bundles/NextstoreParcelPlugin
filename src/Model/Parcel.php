@@ -195,6 +195,9 @@ class Parcel implements ParcelInterface
 
     public function hasPayments(): bool
     {
+        if ($this->payments === null) {
+            return false;
+        }
         return !$this->payments->isEmpty();
     }
 
