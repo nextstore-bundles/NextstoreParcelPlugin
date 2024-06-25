@@ -7,6 +7,7 @@ namespace Nextstore\SyliusParcelPlugin\Controller\Admin\Action;
 use Nextstore\SyliusParcelPlugin\Model\Parcel;
 use Nextstore\SyliusParcelPlugin\Service\ParcelService;
 use Doctrine\ORM\EntityManagerInterface;
+use Nextstore\SyliusParcelPlugin\Model\ParcelInterface;
 use Sylius\Component\Core\Model\Customer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -32,8 +33,8 @@ class AddItemsToParcelAction extends AbstractController
 
         try {
             $parcelId = $request->get('id');
-            $parcel = $this->entityManager->getRepository(Parcel::class)->find($parcelId);
-            Assert::isInstanceOf($parcel, Parcel::class);
+            $parcel = $this->entityManager->getRepository(ParcelInterface::class)->find($parcelId);
+            Assert::isInstanceOf($parcel, ParcelInterface::class);
             Assert::eq($parcel->getState(), Parcel::STATE_NEW, 'Зөвхөн Шинэ төлөвтэй байх үед нэмэх боломжтой');
 
             Assert::keyExists($params, 'itemIds', 'Order item сонгоогүй байна');

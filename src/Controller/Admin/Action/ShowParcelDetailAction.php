@@ -7,6 +7,7 @@ namespace Nextstore\SyliusParcelPlugin\Controller\Admin\Action;
 use Nextstore\SyliusParcelPlugin\Doctrine\ORM\Repository\OrderItemRepository;
 use Nextstore\SyliusParcelPlugin\Model\Parcel;
 use Doctrine\ORM\EntityManagerInterface;
+use Nextstore\SyliusParcelPlugin\Model\ParcelInterface;
 use Sylius\Component\Customer\Model\Customer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,8 +36,8 @@ class ShowParcelDetailAction extends AbstractController
     {
         $parcelId = $request->get('id', null);
 
-        $parcel = $this->entityManager->getRepository(Parcel::class)->find($parcelId);
-        Assert::isInstanceOf($parcel, Parcel::class);
+        $parcel = $this->entityManager->getRepository(ParcelInterface::class)->find($parcelId);
+        Assert::isInstanceOf($parcel, ParcelInterface::class);
 
         $customer = $parcel->getCustomer();
         Assert::isInstanceOf($customer, Customer::class);

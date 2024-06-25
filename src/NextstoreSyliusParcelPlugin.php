@@ -6,6 +6,7 @@ namespace Nextstore\SyliusParcelPlugin;
 
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Sylius\Bundle\ResourceBundle\AbstractResourceBundle;
+use Sylius\Bundle\ResourceBundle\ResourceBundleInterface;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 
 final class NextstoreSyliusParcelPlugin extends AbstractResourceBundle

@@ -22,6 +22,7 @@ class ParcelItemController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
+        private ParcelItemRepository $parcelItemRepository,
         private Environment $twig,
         private ParcelService $parcelService,
     ) {
@@ -52,9 +53,7 @@ class ParcelItemController extends AbstractController
         ]);
 
 
-        /** @var ParcelItemRepository $parcelItemRepository */
-        $parcelItemRepository = $this->entityManager->getRepository(ParcelItem::class);
-        $parcels = $parcelItemRepository->getItems($state, $phone, $startDate, $endDate, $orderBy, $orderNumber, $trackingCode, $parcelCode);
+        $parcels = $this->parcelItemRepository->getItems($state, $phone, $startDate, $endDate, $orderBy, $orderNumber, $trackingCode, $parcelCode);
 
         $adapter = new ArrayAdapter($parcels);
         $pager = new Pagerfanta($adapter);

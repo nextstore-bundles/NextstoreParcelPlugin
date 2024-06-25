@@ -63,7 +63,7 @@ class Parcel implements ParcelInterface
     protected ?AddressInterface $address;
 
     /** @var Collection|ParcelItemInterface[] */
-    protected  $items;
+    protected $items;
 
     /** @var ChannelInterface|null */
     protected ?ChannelInterface $channel;
@@ -77,7 +77,7 @@ class Parcel implements ParcelInterface
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        /** @var ArrayCollection<array-key, OrderItem> $this->items */
+        /** @var ArrayCollection<array-key, ParcelItemInterface> $this->items */
         $this->items = new ArrayCollection();
         /** @var ArrayCollection<array-key, ParcelPaymentInterface> $this->payments */
         $this->payments = new ArrayCollection();

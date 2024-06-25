@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--suppress XmlDefaultAttributeValue -->
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <mapped-superclass name="Nextstore\SyliusParcelPlugin\Model\Parcel"
         table="nextstore_parcel">
@@ -12,6 +12,7 @@
         </id>
         <one-to-many field="items"
             target-entity="Nextstore\SyliusParcelPlugin\Model\ParcelItemInterface"
+            fetch="EAGER"
             mapped-by="parcel" orphan-removal="true">
             <cascade>
                 <cascade-all />
@@ -20,7 +21,7 @@
         <one-to-many field="payments"
             target-entity="Nextstore\SyliusParcelPlugin\Model\ParcelPaymentInterface"
             mapped-by="parcel"
-            fetch="EXTRA_LAZY">
+            fetch="EAGER">
             <cascade>
                 <cascade-all />
             </cascade>

@@ -26,23 +26,17 @@ use Sylius\Component\Resource\Factory\Factory;
 final class Configuration implements ConfigurationInterface
 {
     /**
-     * @psalm-suppress UnusedVariable
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        if (method_exists(TreeBuilder::class, 'getRootNode')) {
-            $treeBuilder = new TreeBuilder('nextstore_sylius_parcel');
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('nextstore_sylius_parcel');
-        }
+        $treeBuilder = new TreeBuilder('nextstore_sylius_parcel');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
-            ->scalarNode('driver')->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)->end()
+                ->scalarNode('driver')->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)->end()
             ->end();
 
         $this->addResourcesSection($rootNode);
@@ -58,60 +52,61 @@ final class Configuration implements ConfigurationInterface
     {
         $node
             ->children()
-            ->arrayNode('resources')
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->arrayNode('parcel')
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->variableNode('options')->end()
-            ->arrayNode('classes')
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->scalarNode('model')->defaultValue(Parcel::class)->cannotBeEmpty()->end()
-            ->scalarNode('interface')->defaultValue(ParcelInterface::class)->cannotBeEmpty()->end()
-            ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
-            ->scalarNode('repository')->defaultValue(ParcelRepository::class)->cannotBeEmpty()->end()
-            ->scalarNode('factory')->defaultValue(Factory::class)->end()
-            ->scalarNode('form')->defaultValue(ParcelType::class)->end()
+                ->arrayNode('resources')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('parcel')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Parcel::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('interface')->defaultValue(ParcelInterface::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(ParcelRepository::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(ParcelType::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('parcel_item')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(ParcelItem::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('interface')->defaultValue(ParcelItemInterface::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(ParcelItemRepository::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(ParcelItemType::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('parcel_payment')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(ParcelPayment::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('interface')->defaultValue(ParcelPaymentInterface::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->arrayNode('parcel_item')
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->variableNode('options')->end()
-            ->arrayNode('classes')
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->scalarNode('model')->defaultValue(ParcelItem::class)->cannotBeEmpty()->end()
-            ->scalarNode('interface')->defaultValue(ParcelItemInterface::class)->cannotBeEmpty()->end()
-            ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
-            ->scalarNode('repository')->defaultValue(ParcelItemRepository::class)->cannotBeEmpty()->end()
-            ->scalarNode('factory')->defaultValue(Factory::class)->end()
-            ->scalarNode('form')->defaultValue(ParcelItemType::class)->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->arrayNode('parcel_payment')
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->variableNode('options')->end()
-            ->arrayNode('classes')
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->scalarNode('model')->defaultValue(ParcelPayment::class)->cannotBeEmpty()->end()
-            ->scalarNode('interface')->defaultValue(ParcelPaymentInterface::class)->cannotBeEmpty()->end()
-            ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
-            ->scalarNode('factory')->defaultValue(Factory::class)->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end();
+        ;
     }
 }
