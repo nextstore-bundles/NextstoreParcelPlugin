@@ -277,6 +277,9 @@ class Parcel implements ParcelInterface
 
     public function getLastPayment(?string $state = null): ?ParcelPaymentInterface
     {
+        if ($this->payments === null) {
+            return null;
+        }
         if ($this->payments->isEmpty()) {
             return null;
         }
