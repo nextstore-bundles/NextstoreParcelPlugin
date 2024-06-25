@@ -52,5 +52,11 @@
         <property name="channels" required="false" />
         <property name="payments" required="false" />
         <property name="customer" required="false" />
+        <property name="items" readable="true" writable="false">
+            <subresource resourceClass="%nextstore_sylius_parcel.model.parcel_item.class%" />
+        </property>
+        <property name="payments" readable="true" writable="false">
+            <subresource resourceClass="%nextstore_sylius_parcel.model.parcel_payment.class%" />
+        </property>
     </resource>
 </resources>
