@@ -68,12 +68,15 @@
 
         <attribute name="items">
             <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
         </attribute>
         <attribute name="payments">
             <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
         </attribute>
         <attribute name="customer">
             <group>shop:parcel:read</group>
+            <group>shop:parcel:list</group>
         </attribute>
         <attribute name="address">
             <group>shop:parcel:read</group>
