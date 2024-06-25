@@ -30,8 +30,14 @@ final class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('nextstore_sylius_parcel');
-        $rootNode = $treeBuilder->getRootNode();
+        if (method_exists(TreeBuilder::class, 'getRootNode')) {
+            $treeBuilder = new TreeBuilder('nextstore_sylius_parcel');
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $treeBuilder = new TreeBuilder();
+            $rootNode = $treeBuilder->root('nextstore_sylius_parcel');
+        }
 
         $rootNode
             ->addDefaultsIfNotSet()
