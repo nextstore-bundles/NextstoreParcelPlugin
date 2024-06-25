@@ -10,7 +10,7 @@ use Nextstore\SyliusParcelPlugin\Model\ParcelInterface;
 use Nextstore\SyliusParcelPlugin\Model\ParcelPayment;
 use Nextstore\SyliusParcelPlugin\Model\ParcelPaymentInterface;
 use Sylius\Bundle\ApiBundle\Exception\PaymentNotFoundException;
-use Sylius\Component\Core\Model\PaymentMethod;
+use Sylius\Component\Payment\Model\PaymentMethodInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,7 +50,7 @@ class ParcelController extends AbstractController
         Assert::keyExists($params, 'paymentMethod');
         Assert::notEmpty($params['paymentMethod']);
 
-        $paymentMethod = $this->entityManager->getRepository(PaymentMethod::class)->findOneBy(['code' => $params['paymentMethod']]);
+        $paymentMethod = $this->entityManager->getRepository(PaymentMethodInterface::class)->findOneBy(['code' => $params['paymentMethod']]);
 
         /** @var Parcel $parcel */
         $parcel = $this->entityManager->getRepository(ParcelInterface::class)->find($parcelId);
@@ -59,7 +59,7 @@ class ParcelController extends AbstractController
         $payment = $this->entityManager->getRepository(ParcelPaymentInterface::class)->find($paymentId);
 
         Assert::isInstanceOf($payment, ParcelPaymentInterface::class);
-        Assert::isInstanceOf($paymentMethod, PaymentMethod::class);
+        Assert::isInstanceOf($paymentMethod, PaymentMethodInterface::class);
         Assert::isInstanceOf($parcel, ParcelInterface::class);
 
         if (!$parcel->hasPayment($payment)) {
