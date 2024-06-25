@@ -1,34 +1,44 @@
 imports:
-  - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
 
-  - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
 
-  - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
 
-  - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
-  - {
-      resource: "@NextstoreSyliusParcelPlugin/Resources/config/app/config.yaml",
-    }
-  - { resource: "@NextstoreSyliusParcelPlugin/Resources/config/services.xml" }
+    - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
 
 parameters:
-  sylius_core.public_dir: "%kernel.project_dir%/public"
+    sylius_core.public_dir: "%kernel.project_dir%/public"
 
 sylius_shop:
-  product_grid:
-    include_all_descendants: true
+    product_grid:
+        include_all_descendants: true
 
 sylius_api:
-  enabled: true
+    enabled: true
 
 sylius_order:
-  resources:
-    order_item:
-      classes:
-        model: Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Order\OrderItem
+    resources:
+        order_item:
+            classes:
+                model: Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Order\OrderItem
 
 sylius_product:
-  resources:
-    product:
-      classes:
-        model: Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Product\Product
+    resources:
+        product:
+            classes:
+                model: Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Product\Product
+
+nextstore_sylius_parcel:
+    resources:
+        parcel:
+            classes:
+                model: Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Parcel\Parcel
+                repository: Tests\Nextstore\SyliusParcelPlugin\Application\src\Repository\ParcelRepository
+        parcel_item:
+            classes:
+                model: Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Parcel\ParcelItem
+                repository: Tests\Nextstore\SyliusParcelPlugin\Application\src\Repository\ParcelItemRepository
+        parcel_payment:
+            classes:
+                model: Tests\Nextstore\SyliusParcelPlugin\Application\src\Entity\Parcel\ParcelPayment

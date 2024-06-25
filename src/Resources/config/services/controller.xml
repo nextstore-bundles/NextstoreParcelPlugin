@@ -10,6 +10,7 @@
             class="Nextstore\SyliusParcelPlugin\Controller\Admin\ParcelItemController"
         >
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="nextstore_sylius_parcel.repository.parcel_item" />
             <argument type="service" id="twig" />
             <argument type="service" id="nextstore_sylius_parcel.service.parcel" />
             <call method="setContainer">

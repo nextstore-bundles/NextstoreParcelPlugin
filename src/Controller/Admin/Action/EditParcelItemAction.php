@@ -8,6 +8,8 @@ use Nextstore\SyliusParcelPlugin\Model\Parcel;
 use Nextstore\SyliusParcelPlugin\Model\ParcelItem;
 use Nextstore\SyliusParcelPlugin\Service\ParcelService;
 use Doctrine\ORM\EntityManagerInterface;
+use Nextstore\SyliusParcelPlugin\Model\ParcelInterface;
+use Nextstore\SyliusParcelPlugin\Model\ParcelItemInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,11 +29,11 @@ class EditParcelItemAction extends AbstractController
 
         try {
             $parcelId = $request->get('parcelId');
-            $parcel = $this->entityManager->getRepository(Parcel::class)->find($parcelId);
-            Assert::isInstanceOf($parcel, Parcel::class);
+            $parcel = $this->entityManager->getRepository(ParcelInterface::class)->find($parcelId);
+            Assert::isInstanceOf($parcel, ParcelInterface::class);
             $itemId = $request->get('itemId');
-            $item = $this->entityManager->getRepository(ParcelItem::class)->find($itemId);
-            Assert::isInstanceOf($item, ParcelItem::class);
+            $item = $this->entityManager->getRepository(ParcelItemInterface::class)->find($itemId);
+            Assert::isInstanceOf($item, ParcelItemInterface::class);
 
             if ($request->request->all()) {
                 $params = $request->request->all();

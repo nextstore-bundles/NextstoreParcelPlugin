@@ -6,11 +6,12 @@ namespace Nextstore\SyliusParcelPlugin\Service;
 
 use Nextstore\SyliusDropshippingCorePlugin\Model\OrderItemInterface;
 use Nextstore\SyliusParcelPlugin\Model\Parcel;
-use Nextstore\SyliusParcelPlugin\Model\ParcelItem;
 use Nextstore\SyliusParcelPlugin\Exception\File\ErrorWhileReadingFileException;
 use Nextstore\SyliusParcelPlugin\Validator\ValidatorFile;
 use Nextstore\SyliusParcelPlugin\Validator\ValidatorParcel;
 use Doctrine\ORM\EntityManagerInterface;
+use Nextstore\SyliusParcelPlugin\Model\ParcelInterface;
+use Nextstore\SyliusParcelPlugin\Model\ParcelItemInterface;
 use Nextstore\SyliusParcelPlugin\Model\ParcelPaymentInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -18,7 +19,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use SM\Factory\FactoryInterface as SMFactory;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
-use Sylius\Component\Customer\Model\CustomerInterface;
+use Sylius\Component\Core\Exception\CustomerNotFoundException;
+use Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Payment\Model\PaymentMethodInterface;
 use Sylius\Component\Payment\Resolver\DefaultPaymentMethodResolverInterface;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
@@ -55,16 +57,18 @@ class ParcelService
     /**
      * @param array<int,mixed> $itemIds
      */
-    public function packItems(array $itemIds, int $customerId, ?int $addressId): Parcel
+    public function packItems(array $itemIds, int $customerId, ?int $addressId): ParcelInterface
     {
         $channel = $this->channelContext->getChannel();
-        /** @var Parcel $parcel */
+        /** @var ParcelInterface $parcel */
         $parcel = $this->parcelFactory->createNew();
         $parcel->setState(Parcel::STATE_NEW);
         $parcel->setChannel($channel);
 
-        $customer = $this->em->getRepository(CustomerInterface::class)->find($customerId);
-        Assert::isInstanceOf($customer, CustomerInterface::class);
+        $customer = $this->em->getRepository(Customer::class)->find($customerId);
+        if (!$customer instanceof Customer) {
+            throw new CustomerNotFoundException();
+        }
         $parcel->setCustomer($customer);
         $parcel->setCurrencyCode($this->currencyContext->getCurrencyCode());
 
@@ -84,7 +88,7 @@ class ParcelService
             $order = $item->getOrder();
             Assert::isInstanceOf($order, OrderInterface::class);
 
-            /** @var ParcelItem $parcelItem */
+            /** @var ParcelItemInterface $parcelItem */
             $parcelItem = $this->parcelItemFactory->createNew();
             $parcelItem->setOrderItem($item);
             $parcelItem->setParcel($parcel);
@@ -99,7 +103,7 @@ class ParcelService
         return $parcel;
     }
 
-    public function createParcelPayment(Parcel $parcel): void
+    public function createParcelPayment(ParcelInterface $parcel): void
     {
         $channel = $this->channelContext->getChannel();
         if ($parcel->hasPayments()) {
@@ -127,7 +131,7 @@ class ParcelService
     /**
      * @param array<int,mixed> $params
      */
-    public function editParcel(Parcel $parcel, array $params): void
+    public function editParcel(ParcelInterface $parcel, array $params): void
     {
         Assert::notNull($params['total']);
         Assert::notNull($params['length']);
@@ -152,7 +156,7 @@ class ParcelService
     /**
      * @param array<int,mixed> $params
      */
-    public function editParcelItem(ParcelItem $item, array $params): void
+    public function editParcelItem(ParcelItemInterface $item, array $params): void
     {
         Assert::notNull($params['total']);
         Assert::notNull($params['length']);
@@ -174,7 +178,7 @@ class ParcelService
     /**
      * @param mixed $itemIds
      */
-    public function addItemsToParcel(Parcel $parcel, $itemIds): void
+    public function addItemsToParcel(ParcelInterface $parcel, $itemIds): void
     {
         foreach ($itemIds as $itemId) {
             $orderItem = $this->em->getRepository(OrderItemInterface::class)->find($itemId);
@@ -221,8 +225,8 @@ class ParcelService
                 }
 
                 $this->validatorParcel->validateInputTransition($itemTransition);
-                $parcels = $this->em->getRepository(Parcel::class)->findBy(['code' => $code]);
-                /** @var Parcel $parcel */
+                $parcels = $this->em->getRepository(ParcelInterface::class)->findBy(['code' => $code]);
+                /** @var ParcelInterface $parcel */
                 foreach ($parcels as $parcel) {
                     $this->updateState($parcel, $itemTransition);
                 }
@@ -236,7 +240,7 @@ class ParcelService
     /**
      * @param mixed $transition
      */
-    public function updateState(Parcel $parcel, $transition): void
+    public function updateState(ParcelInterface $parcel, $transition): void
     {
         $parcelSM = $this->stateMachineFactory->get($parcel, Parcel::GRAPH_PARCEL);
         if ($parcelSM->can($transition)) {

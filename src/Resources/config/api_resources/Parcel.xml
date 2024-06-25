@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="https://api-platform.com/schema/metadata https://api-platform.com/schema/metadata/metadata-2.0.xsd"
 >
-    <resource class="Nextstore\SyliusParcelPlugin\Model\Parcel" shortName="Parcel">
+    <resource class="%nextstore_sylius_parcel.model.parcel.class%" shortName="Parcel">
 
         <attribute name="normalization_context">
             <attribute name="groups">

@@ -7,6 +7,7 @@ namespace Nextstore\SyliusParcelPlugin\Controller\Admin\Action;
 use Nextstore\SyliusParcelPlugin\Model\Parcel;
 use Nextstore\SyliusParcelPlugin\Service\ParcelService;
 use Doctrine\ORM\EntityManagerInterface;
+use Nextstore\SyliusParcelPlugin\Model\ParcelInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ class EditParcelAction extends AbstractController
 
         try {
             $parcelId = $request->get('id');
-            $parcel = $this->entityManager->getRepository(Parcel::class)->find($parcelId);
+            $parcel = $this->entityManager->getRepository(ParcelInterface::class)->find($parcelId);
             Assert::isInstanceOf($parcel, Parcel::class);
             if ($request->request->all()) {
                 $params = $request->request->all();

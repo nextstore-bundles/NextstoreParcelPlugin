@@ -10,6 +10,7 @@ use Sylius\Bundle\CoreBundle\Doctrine\ORM\OrderItemRepository as BaseOrderItemRe
 use Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Core\Model\Order;
 use Sylius\Component\Core\OrderCheckoutStates;
+use Sylius\Component\Customer\Model\CustomerInterface;
 
 // use Nextstore\SyliusParcelPlugin\Doctrine\ORM\Repository\OrderItemRepositoryInterface as NextstoreOrderItemRepository;
 
@@ -110,7 +111,7 @@ class OrderItemRepository extends BaseOrderItemRepository
         return $result;
     }
 
-    public function getNotPackedItemsForParcel(Customer $customer): mixed
+    public function getNotPackedItemsForParcel(CustomerInterface $customer): mixed
     {
         return $this->createQueryBuilder('i')
             ->leftJoin('i.order', 'o')
