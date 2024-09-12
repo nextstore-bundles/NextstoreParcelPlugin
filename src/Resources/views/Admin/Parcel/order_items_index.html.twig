@@ -70,7 +70,8 @@
 		</div>
 	</div>
 
-	{% for key, values in items %}
+	{% for values in items %}
+	{% set key = values[0].phone %}
     <div class="ui segment" style="overflow-x: auto;  padding: 2px !important">
 		<table class="ui celled compact small table order-summary-table" style="min-width: 1400px">
 			<thead class="full-width">
