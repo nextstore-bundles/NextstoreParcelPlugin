@@ -29,5 +29,8 @@
         <attribute name="updatedAt">
             <group>shop:parcel:read</group>
         </attribute>
+        <attribute name="parcelPayment">
+            <group>shop:parcel:read</group>
+        </attribute>
     </class>
 </serializer>

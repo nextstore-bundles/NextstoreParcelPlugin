@@ -13,6 +13,8 @@ class ParcelPayment extends BasePayment implements ParcelPaymentInterface
     /** @var Parcel */
     protected ParcelInterface $parcel;
 
+    protected $paidAmount = 0;
+
     public function getParcel(): ?ParcelInterface
     {
         return $this->parcel;
@@ -21,5 +23,15 @@ class ParcelPayment extends BasePayment implements ParcelPaymentInterface
     public function setParcel(?ParcelInterface $parcel): void
     {
         $this->parcel = $parcel;
+    }
+
+    public function getPaidAmount(): ?int
+    {
+        return $this->paidAmount;
+    }
+
+    public function setPaidAmount(int $paidAmount): void
+    {
+        $this->paidAmount = $paidAmount;
     }
 }
