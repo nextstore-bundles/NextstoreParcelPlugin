@@ -15,4 +15,6 @@ use Nextstore\SyliusParcelPlugin\Model\ParcelPaymentInterface;
  */
 class ParcelPayment extends BaseParcelPayment implements ParcelPaymentInterface
 {
+    public const STATE_PARTIALLY_PAID = 'partially_paid';
+    public const TRANSITION_PARTIALLY_PAY= 'partially_pay';
 }
