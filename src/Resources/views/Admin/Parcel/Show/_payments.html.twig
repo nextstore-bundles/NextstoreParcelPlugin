@@ -20,6 +20,8 @@
                             {{ payment.method }}
                         </div>
                         <div class="description">
+                            Z{{ payment.id }}
+                            </br>
                             {{ money.format(payment.amount, payment.parcel.currencyCode) }}
                         </div>
                         {% if sm_can(payment, 'complete', 'sylius_parcel_payment') %}

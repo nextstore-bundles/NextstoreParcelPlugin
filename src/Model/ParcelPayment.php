@@ -34,4 +34,10 @@ class ParcelPayment extends BasePayment implements ParcelPaymentInterface
     {
         $this->paidAmount = $paidAmount;
     }
+
+    public function addPaidAmount(int $paidAmount): void
+    {
+        $paidAmountTotal = $this->paidAmount + $paidAmount;
+        $this->setPaidAmount($paidAmountTotal);
+    }
 }
