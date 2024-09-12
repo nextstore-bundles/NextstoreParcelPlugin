@@ -11,9 +11,9 @@
         <many-to-one field="parcel"
             target-entity="Nextstore\SyliusParcelPlugin\Model\ParcelInterface"
             inversed-by="payments">
-            <field name="paid_amount" type="integer" nullable="true" />
             <join-column name="parcel_id" referenced-column-name="id" nullable="false"
                 on-delete="CASCADE" />
         </many-to-one>
+        <field name="paidAmount" column="paid_amount" type="integer" nullable="true" />
     </mapped-superclass>
 </doctrine-mapping>
