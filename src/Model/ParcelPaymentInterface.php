@@ -13,4 +13,5 @@ interface ParcelPaymentInterface extends PaymentInterface
 
     public function getPaidAmount(): ?int;
     public function setPaidAmount(int $paidAmount): void;
+    public function addPaidAmount(int $paidAmount): void;
 }
