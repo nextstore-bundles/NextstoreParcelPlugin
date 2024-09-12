@@ -20,7 +20,7 @@ use SM\Factory\FactoryInterface as SMFactory;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Sylius\Component\Core\Exception\CustomerNotFoundException;
-use Sylius\Component\Core\Model\Customer;
+use Sylius\Component\Customer\Model\CustomerInterface;
 use Sylius\Component\Payment\Model\PaymentMethodInterface;
 use Sylius\Component\Payment\Resolver\DefaultPaymentMethodResolverInterface;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
@@ -65,8 +65,8 @@ class ParcelService
         $parcel->setState(Parcel::STATE_NEW);
         $parcel->setChannel($channel);
 
-        $customer = $this->em->getRepository(Customer::class)->find($customerId);
-        if (!$customer instanceof Customer) {
+        $customer = $this->em->getRepository(CustomerInterface::class)->find($customerId);
+        if (!$customer instanceof CustomerInterface) {
             throw new CustomerNotFoundException();
         }
         $parcel->setCustomer($customer);
