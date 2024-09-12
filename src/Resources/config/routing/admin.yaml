@@ -132,7 +132,7 @@ nextstore_sylius_parcel_admin_parcel_payment_complete:
                 arguments:
                     id: $id
             state_machine:
-                graph: sylius_payment
+                graph: sylius_parcel_payment
                 transition: complete
             redirect: referer
 
@@ -149,7 +149,7 @@ nextstore_sylius_parcel_admin_parcel_payment_refund:
                 arguments:
                     id: $id
             state_machine:
-                graph: sylius_payment
+                graph: sylius_parcel_payment
                 transition: refund
             redirect: referer
 
