@@ -29,7 +29,7 @@
         <attribute name="updatedAt">
             <group>shop:parcel:read</group>
         </attribute>
-        <attribute name="parcelPayment">
+        <attribute name="paidAmount">
             <group>shop:parcel:read</group>
         </attribute>
     </class>
