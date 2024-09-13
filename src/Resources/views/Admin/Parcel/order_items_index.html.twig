@@ -106,7 +106,9 @@
                         </td>
                         <td>
                             <h4 class="ui image header">
-                                <img src="{{ cdn_url }}/uploads/{{item.imageType}}/{{item.imagePath}}" class="ui mini rounded image">
+                                <img
+                                    src="{{ item.imagePath|imagine_filter('sylius_shop_product_thumbnail') }}"
+                                    class="ui rounded image">
                                 <div class="content">
                                     {{item.productName}}
                                     <div class="sub header">{{item.productCode}}

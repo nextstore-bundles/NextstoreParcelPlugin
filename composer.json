@@ -10,7 +10,7 @@
     "require": {
         "php": "^8.0",
         "aws/aws-sdk-php": "^3.258",
-        "nextstore/sylius-dropshipping-core-plugin": "^0.1.9",
+        "nextstore/sylius-dropshipping-core-plugin": "^0.1.30",
         "phpoffice/phpspreadsheet": "^1.27",
         "sylius/mailer-bundle": "^1.8 || ^2.0@beta",
         "sylius/sylius": "^1.12",

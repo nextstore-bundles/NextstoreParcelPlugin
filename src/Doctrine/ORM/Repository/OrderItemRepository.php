@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nextstore\SyliusParcelPlugin\Doctrine\ORM\Repository;
 
+use Nextstore\SyliusDropshippingCorePlugin\Model\ProductInterface;
 use Nextstore\SyliusParcelPlugin\Model\OrderItemStates;
 use Nextstore\SyliusParcelPlugin\Model\ParcelItem;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\OrderItemRepository as BaseOrderItemRepository;
@@ -49,7 +50,9 @@ class OrderItemRepository extends BaseOrderItemRepository
             LEFT JOIN `sylius_product` p ON pv.product_id = p.id
             LEFT JOIN `sylius_product_image` img ON img.owner_id = p.id
             WHERE pi.order_item_id IS NULL
-            AND i.state = :state';
+            AND i.state = :state
+            AND p.order_type = :orderType'
+            ;
 
         if ($phone) {
             $sql .= ' AND c.phone_number LIKE :phone';
@@ -96,6 +99,7 @@ class OrderItemRepository extends BaseOrderItemRepository
         $conn = $this->getEntityManager()->getConnection();
         $statement = $conn->prepare($sql);
 
+        $statement->bindValue('orderType', ProductInterface::ORDER_TYPE_ORDER);
         $statement->bindValue('state', OrderItemStates::STATE_FOREIGN_DELIVERY_COMPLETED);
         $phone && $statement->bindValue('phone', '%' . $phone . '%');
         $orderNumber && $statement->bindValue('orderNumber', $orderNumber);
