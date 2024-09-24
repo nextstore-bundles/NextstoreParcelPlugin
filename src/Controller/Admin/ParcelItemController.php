@@ -9,6 +9,7 @@ use Nextstore\SyliusParcelPlugin\Form\Type\ParcelItemFilterType;
 use Nextstore\SyliusParcelPlugin\Repository\Parcel\ParcelItemRepository;
 use Nextstore\SyliusParcelPlugin\Service\ParcelService;
 use Doctrine\ORM\EntityManagerInterface;
+use Nextstore\SyliusParcelPlugin\Repository\Parcel\ParcelRepository;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +23,7 @@ class ParcelItemController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private ParcelItemRepository $parcelItemRepository,
+        private ParcelRepository $parcelRepository,
         private Environment $twig,
         private ParcelService $parcelService,
     ) {
@@ -53,7 +54,7 @@ class ParcelItemController extends AbstractController
         ]);
 
 
-        $parcels = $this->parcelItemRepository->getItems($state, $phone, $startDate, $endDate, $orderBy, $orderNumber, $trackingCode, $parcelCode);
+        $parcels = $this->parcelRepository->getItems($state, $phone, $startDate, $endDate, $orderBy, $orderNumber, $trackingCode, $parcelCode);
 
         $adapter = new ArrayAdapter($parcels);
         $pager = new Pagerfanta($adapter);
