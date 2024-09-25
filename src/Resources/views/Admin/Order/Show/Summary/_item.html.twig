@@ -20,7 +20,11 @@
     <td rowspan="1" class="single line">
         {% include '@SyliusAdmin/Product/_info.html.twig' %}
         <br/>
-        <a target="_blank" href="{{item.webUrl}}">{{'nextstore_sylius_parcel.ui.web_url' | trans}}</a>
+        <div>
+        {% if item.webUrl %}
+            <a target="_blank" href="{{item.webUrl}}">{{'nextstore_sylius_parcel.ui.web_url' | trans}}</a>
+        {% endif %}
+        </div>
     </td>
     <td rowspan="1" class="right aligned unit-price">
         {{ money.format(item.unitPrice, order.currencyCode) }}
@@ -56,8 +60,21 @@
 <tr>
     <td colspan="3">
         <div style="display: flex; justify-content: space-between; width: 100%">
-            <strong class="ui label">{{ 'nextstore_sylius_parcel.ui.tracking_code'|trans }}: </strong>
-            <strong class="right aligned" style="width: 100%">{{ item.trackingCode }}</strong>
+            {% if product.orderType == 'ready'%}
+                <strong class='ui blue label'>
+                    {{'nextstore_sylius_dropshipping_core.ui.order_type_ready' | trans}}
+                </strong>
+            {% elseif product.orderType == 'order'%}
+                <strong class='ui green label'>
+                    {{'nextstore_sylius_dropshipping_core.ui.order_type_order' | trans}}
+                </strong>
+                <strong class="ui label">{{ 'nextstore_sylius_parcel.ui.tracking_code'|trans }}: </strong>
+                {% if item.trackingCode %}
+                    <strong class="right aligned" style="width: 100%">{{ item.trackingCode }}</strong>
+                {% else %}
+                    <strong class="right aligned" style="width: 100%">N/A</strong>
+                {% endif %}
+            {% endif %}
         </div>
     </td>
 </tr>
@@ -197,4 +214,3 @@
         }
     }
 </style>
-

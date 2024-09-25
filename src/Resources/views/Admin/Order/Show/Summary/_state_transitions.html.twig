@@ -4,95 +4,137 @@
 {% set state_cancelled = constant('Nextstore\\SyliusParcelPlugin\\Model\\OrderItemStates::STATE_CANCELLED') %}
 {% set state_purchased = constant('Nextstore\\SyliusParcelPlugin\\Model\\OrderItemStates::STATE_PURCHASED') %}
 {% set state_arrived_at_foreign_warehouse = constant('Nextstore\\SyliusParcelPlugin\\Model\\OrderItemStates::STATE_FOREIGN_DELIVERY_COMPLETED') %}
+{% set product  = item.variant.product %}
 
+{% if product.orderType == 'ready' %}
+    {% if item.state == state_new %}
+        <td rowspan="{{ row }}" class="right aligned subtotal">
+            <span class="ui yellow label">{{ 'nextstore_sylius_parcel.ui.new' | trans }}</span>
+        </td>
+        <td rowspan="{{ row }}" >
+            <div class="ui buttons">
+                <a class="ui red button" href="{{ path('nextstore_sylius_parcel_admin_order_item_cancel', {'id' : item.id, '_csrf_token': csrf_token(item.id)}) }}">
+                    {{ 'sylius.ui.cancel' | trans }}
+                </a>
+                <div class="or"></div>
+                <a class="ui blue button" href="{{ path('nextstore_sylius_parcel_admin_order_item_confirm', {'id' : item.id, '_csrf_token': csrf_token(item.id) }) }}">
+                    {{ 'nextstore_sylius_parcel.ui.transition_confirm' | trans }}
+                </a>
+            </div>
+        </td>
+    {% elseif item.state == state_confirmed %}
+        <td rowspan="{{ row }}" class="right aligned">
+            <span class="ui blue label">{{ 'nextstore_sylius_parcel.ui.confirmed' | trans }}</span>
+        </td>
+        <td rowspan="{{ row }}" >
+            <div class="ui buttons">
+        </td >
+    {% elseif item.state == state_cancelled %}
+        <td rowspan="{{ row }}" class="right aligned subtotal">
+            <span class="ui red label">{{ 'nextstore_sylius_parcel.ui.cancelled' | trans }}</span>
+        </td>
+        <td rowspan="{{ row }}" >
+            <div class="ui buttons">
+                <a class="ui yellow button" href="{{ path('nextstore_sylius_parcel_admin_order_item_restore', {'id' : item.id,  '_csrf_token': csrf_token(item.id) }) }}">
+                    {{ 'sylius.ui.restore' | trans }}
+                </a>
+            </div>
+        </td>
+    {% endif %}
+{% elseif product.orderType == 'order' %}
+    {% if item.state == state_new %}
+        <td rowspan="{{ row }}" class="right aligned subtotal">
+            <span class="ui yellow label">{{ 'nextstore_sylius_parcel.ui.new' | trans }}</span>
+        </td>
+        <td rowspan="{{ row }}" >
+            <div class="ui buttons">
+                <a class="ui red button" href="{{ path('nextstore_sylius_parcel_admin_order_item_cancel', {'id' : item.id, '_csrf_token': csrf_token(item.id)}) }}">
+                    {{ 'sylius.ui.cancel' | trans }}
+                </a>
+                <div class="or"></div>
+                <a class="ui blue button" href="{{ path('nextstore_sylius_parcel_admin_order_item_confirm', {'id' : item.id, '_csrf_token': csrf_token(item.id) }) }}">
+                    {{ 'nextstore_sylius_parcel.ui.transition_confirm' | trans }}
+                </a>
+                {% if edit %}
+                <div class="or"></div>
+                <button class="ui button" onclick="showOrderItemEditModal({{item.id}})">
+                    <i class="edit outline icon"></i>
+                    {{'sylius.ui.edit' | trans}}
+                </button>
+                {% endif %}
+            </div>
+        </td>
+    {% elseif item.state == state_confirmed %}
+        <td rowspan="{{ row }}" class="right aligned">
+            <span class="ui blue label">{{ 'nextstore_sylius_parcel.ui.confirmed' | trans }}</span>
+        </td>
+        <td rowspan="{{ row }}" >
+            <div class="ui buttons">
+                <a class="ui olive button" href="{{ path('nextstore_sylius_parcel_admin_order_item_purchase', {'id' : item.id, '_csrf_token': csrf_token(item.id) }) }}">
+                    {{ 'nextstore_sylius_parcel.ui.purchased' | trans }}
+                </a>
+                {% if edit %}
+                <div class="or"></div>
+                <button class="ui button" onclick="showOrderItemEditModal({{item.id}})">
+                    <i class="edit outline icon"></i>
+                    {{'sylius.ui.edit' | trans}}
+                </button>
+                {% endif %}
+            </div>
+        </td >
 
-{% if item.state == state_new %}
-    <td rowspan="{{ row }}" class="right aligned subtotal">
-        <span class="ui yellow label">{{ 'nextstore_sylius_parcel.ui.new' | trans }}</span>
-    </td>
-    <td rowspan="{{ row }}" >
-        <div class="ui buttons">
-            <a class="ui red button" href="{{ path('nextstore_sylius_parcel_admin_order_item_cancel', {'id' : item.id, '_csrf_token': csrf_token(item.id)}) }}">
-                {{ 'sylius.ui.cancel' | trans }}
-            </a>
-            <div class="or"></div>
-            <a class="ui blue button" href="{{ path('nextstore_sylius_parcel_admin_order_item_confirm', {'id' : item.id, '_csrf_token': csrf_token(item.id) }) }}">
-                {{ 'nextstore_sylius_parcel.ui.transition_confirm' | trans }}
-            </a>
+    {% elseif item.state == state_purchased %}
+        <td rowspan="{{ row }}" class="right aligned subtotal">
+            <span class="ui olive label">{{ 'nextstore_sylius_parcel.ui.purchased' | trans }}</span>
+        </td>
+        <td rowspan="{{ row }}" >
+            <div class="ui buttons">
+                <a class="ui green button" href="{{ path('nextstore_sylius_parcel_admin_order_item_foreign_delivery', {'id' : item.id, '_csrf_token': csrf_token(item.id) }) }}">
+                    {{ 'nextstore_sylius_parcel.ui.arrived_at_foreign_warehouse' | trans }}
+                </a>
+                {% if edit %}
+                <div class="or"></div>
+                <button class="ui button" onclick="showOrderItemEditModal({{item.id}})">
+                    <i class="edit outline icon"></i>
+                    {{'sylius.ui.edit' | trans}}
+                </button>
+                {% endif %}
+            </div>
+        </td>
+    {% elseif item.state == state_cancelled %}
+        <td rowspan="{{ row }}" class="right aligned subtotal">
+            <span class="ui red label">{{ 'nextstore_sylius_parcel.ui.cancelled' | trans }}</span>
+        </td>
+        <td rowspan="{{ row }}" >
+            <div class="ui buttons">
+                <a class="ui yellow button" href="{{ path('nextstore_sylius_parcel_admin_order_item_restore', {'id' : item.id,  '_csrf_token': csrf_token(item.id) }) }}">
+                    {{ 'sylius.ui.restore' | trans }}
+                </a>
+                {% if edit %}
+                <div class="or"></div>
+                <button class="ui button" onclick="showOrderItemEditModal({{item.id}})">
+                    <i class="edit outline icon"></i>
+                    {{'sylius.ui.edit' | trans}}
+                </button>
+                {% endif %}
+            </div>
+        </td>
+    {% elseif item.state == state_arrived_at_foreign_warehouse %}
+        <td rowspan="{{ row }}" class="right aligned subtotal">
+            <span class="ui green label">{{ 'nextstore_sylius_parcel.ui.arrived_at_foreign_warehouse' | trans }}</span>
+        </td>
+        <td rowspan="{{ row }}">
             {% if edit %}
-            <div class="or"></div>
             <button class="ui button" onclick="showOrderItemEditModal({{item.id}})">
                 <i class="edit outline icon"></i>
                 {{'sylius.ui.edit' | trans}}
             </button>
             {% endif %}
-        </div>
-    </td>
-{% elseif item.state == state_confirmed %}
-    <td rowspan="{{ row }}" class="right aligned">
-        <span class="ui blue label">{{ 'nextstore_sylius_parcel.ui.confirmed' | trans }}</span>
-    </td>
-    <td rowspan="{{ row }}" >
-        <div class="ui buttons">
-            <a class="ui olive button" href="{{ path('nextstore_sylius_parcel_admin_order_item_purchase', {'id' : item.id, '_csrf_token': csrf_token(item.id) }) }}">
-                {{ 'nextstore_sylius_parcel.ui.purchased' | trans }}
-            </a>
-            {% if edit %}
-            <div class="or"></div>
-            <button class="ui button" onclick="showOrderItemEditModal({{item.id}})">
-                <i class="edit outline icon"></i>
-                {{'sylius.ui.edit' | trans}}
-            </button>
-            {% endif %}
-        </div>
-    </td >
-
-{% elseif item.state == state_purchased %}
+        </td>
+    {% endif %}
+{% else %}
     <td rowspan="{{ row }}" class="right aligned subtotal">
-        <span class="ui olive label">{{ 'nextstore_sylius_parcel.ui.purchased' | trans }}</span>
+        <span class="ui label">{{ ('nextstore_sylius_parcel.ui.' ~ item.state) | trans }}</span>
     </td>
-    <td rowspan="{{ row }}" >
-        <div class="ui buttons">
-            <a class="ui green button" href="{{ path('nextstore_sylius_parcel_admin_order_item_foreign_delivery', {'id' : item.id, '_csrf_token': csrf_token(item.id) }) }}">
-                {{ 'nextstore_sylius_parcel.ui.arrived_at_foreign_warehouse' | trans }}
-            </a>
-            {% if edit %}
-            <div class="or"></div>
-            <button class="ui button" onclick="showOrderItemEditModal({{item.id}})">
-                <i class="edit outline icon"></i>
-                {{'sylius.ui.edit' | trans}}
-            </button>
-            {% endif %}
-        </div>
-    </td>
-{% elseif item.state == state_cancelled %}
-    <td rowspan="{{ row }}" class="right aligned subtotal">
-        <span class="ui red label">{{ 'nextstore_sylius_parcel.ui.cancelled' | trans }}</span>
-    </td>
-    <td rowspan="{{ row }}" >
-        <div class="ui buttons">
-            <a class="ui yellow button" href="{{ path('nextstore_sylius_parcel_admin_order_item_restore', {'id' : item.id,  '_csrf_token': csrf_token(item.id) }) }}">
-                {{ 'sylius.ui.restore' | trans }}
-            </a>
-            {% if edit %}
-            <div class="or"></div>
-            <button class="ui button" onclick="showOrderItemEditModal({{item.id}})">
-                <i class="edit outline icon"></i>
-                {{'sylius.ui.edit' | trans}}
-            </button>
-            {% endif %}
-        </div>
-    </td>
-{% elseif item.state == state_arrived_at_foreign_warehouse %}
-    <td rowspan="{{ row }}" class="right aligned subtotal">
-        <span class="ui green label">{{ 'nextstore_sylius_parcel.ui.arrived_at_foreign_warehouse' | trans }}</span>
-    </td>
-    <td rowspan="{{ row }}">
-        {% if edit %}
-        <button class="ui button" onclick="showOrderItemEditModal({{item.id}})">
-            <i class="edit outline icon"></i>
-            {{'sylius.ui.edit' | trans}}
-        </button>
-        {% endif %}
-    </td>
+    <td rowspan="{{ row }}" ></td>
 {% endif %}

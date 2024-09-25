@@ -21,6 +21,7 @@ nextstore_sylius_parcel:
     cancelled: "Cancelled"
     purchased: "Purchased"
     arrived_at_foreign_warehouse: "Arrived in foreign warehouse"
+    foreign_delivery_completed: "Arrived in foreign warehouse"
     delivered: "Delivered"
     shipped_to_customer: "Shipped to customer"
     arrived_in_homeland: "Arrived in Homeland"
