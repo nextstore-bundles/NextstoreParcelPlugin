@@ -21,6 +21,7 @@ nextstore_sylius_parcel:
     cancelled: "Цуцлагдсан"
     purchased: "Худалдан авсан"
     arrived_at_foreign_warehouse: "Гадаад дахь агуулахад ирсэн"
+    foreign_delivery_completed: "Гадаад дахь агуулахад ирсэн"
     delivered: "Илгээгдсэн"
     shipped_to_customer: "Хэрэглэгч рүү илгээсэн"
     arrived_in_homeland: "Эх оронд нь ирсэн"
