@@ -40,6 +40,11 @@
                 </a>
             </div>
         </td>
+    {% else %}
+        <td rowspan="{{ row }}" class="right aligned subtotal">
+            <span class="ui label">{{ ('nextstore_sylius_parcel.ui.' ~ item.state) | trans }}</span>
+        </td>
+        <td rowspan="{{ row }}" ></td>
     {% endif %}
 {% elseif product.orderType == 'order' %}
     {% if item.state == state_new %}
