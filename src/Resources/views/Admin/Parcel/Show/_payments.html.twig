@@ -24,7 +24,7 @@
                             </br>
                             {{ money.format(payment.amount, payment.parcel.currencyCode) }}
                         </div>
-                        {% if sm_can(payment, 'complete', 'sylius_parcel_payment') %}
+                        {% if sm_can(payment, 'complete', 'sylius_payment') %}
                             <div class="ui segment">
                                 <form
                                     action="{{ path('nextstore_sylius_parcel_admin_parcel_payment_complete', {'id': payment.id}) }}"
@@ -35,7 +35,7 @@
                                 </form>
                             </div>
                         {% endif %}
-                        {% if sm_can(payment, 'refund', 'sylius_parcel_payment') %}
+                        {% if sm_can(payment, 'refund', 'sylius_payment') %}
                             <div class="ui segment">
                                 <form
                                     action="{{ path('nextstore_sylius_parcel_admin_parcel_payment_refund', {'id': payment.id}) }}"
