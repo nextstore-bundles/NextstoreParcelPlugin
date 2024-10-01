@@ -64,7 +64,7 @@ winzou_state_machine:
   nextstore_parcel_payment:
     class: "%nextstore_sylius_parcel.model.parcel_payment.class%"
     property_path: state
-    graph: sylius_parcel_payment
+    graph: sylius_payment
     state_machine_class: "%sylius.state_machine.class%"
     states:
       cart: ~
